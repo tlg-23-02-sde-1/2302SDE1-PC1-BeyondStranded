@@ -23,7 +23,8 @@ public class Controller implements SplashApp {
     }
 
     private void startGame() {
-
+        Introduction intro = new Introduction(prompter);
+        intro.gameOption();
     }
     //business
     //accessor get/set/toString
