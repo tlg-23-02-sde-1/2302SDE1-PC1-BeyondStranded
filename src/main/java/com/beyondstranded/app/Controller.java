@@ -19,6 +19,7 @@ public class Controller implements SplashApp {
     private final Prompter prompter = new Prompter(new Scanner(System.in));
     private static Gson gson = new Gson();
     private static Player player;
+    private Parser parser;
 
 //ctors
 
@@ -40,6 +41,7 @@ public class Controller implements SplashApp {
         intro.gameOption();
         intro.showCoreStory();
     }
+
     //business
     //accessor get/set/toString
     //helper
