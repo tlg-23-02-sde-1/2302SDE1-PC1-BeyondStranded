@@ -16,6 +16,7 @@ import java.util.Scanner;
 public class Controller implements SplashApp {
 
 //fields
+    private final Prompter prompter = new Prompter(new Scanner(System.in));
     private static Gson gson = new Gson();
     private static Player player;
 
