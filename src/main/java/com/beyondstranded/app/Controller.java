@@ -25,6 +25,7 @@ public class Controller implements SplashApp {
     private void startGame() {
         Introduction intro = new Introduction(prompter);
         intro.gameOption();
+        intro.showCoreStory();
     }
     //business
     //accessor get/set/toString

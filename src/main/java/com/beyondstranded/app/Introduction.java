@@ -10,9 +10,10 @@ import static com.util.apps.Console.*;
 
 class Introduction {
 
-    private static String rules;
-    private static String introBanner;
+    private static String objective;
+    private static String welcome;
     private static String newGame;
+    private static String story;
 
     private final Prompter prompter;
 
@@ -20,25 +21,32 @@ class Introduction {
         this.prompter = prompter;
     }
 
-    private void welcomePrompt() {
-        blankLines(1);
-        clear();
-        String input = prompter.prompt("Enter your input: ","","This is not a valid option\n");
-    }
-
     void gameOption() {
         blankLines(1);
         clear();
         System.out.println(newGame);
-        String input = prompter.prompt("Enter your command: ","(?i)^new game$","This is not a valid option\n");
+        prompter.prompt("\n\t\t\t\t\tEnter your command: ","(?i)^new game$","\t\t\t\t\tThis is not a valid option\n");
+    }
+
+    void showCoreStory() {
+        showcasePrompt(welcome);
+        showcasePrompt(story);
+        showcasePrompt(objective);
+    }
+
+    void showcasePrompt(String prompt) {
+        blankLines(1);
+        clear();
+        System.out.println(prompt);
+        prompter.prompt("\n\t\t\t\t\tPress Enter to Continue:","","\t\t\t\t\tInvalid input. Only press Enter in your keyboard.\n");
     }
 
     static {
         try {
-            //rules = Files.readString(Path.of();
-            //introBanner = Files.readString(Path.of());
             newGame = Files.readString(Path.of("src/main/resources/images/New Game Prompt.txt"));
-
+            story = Files.readString(Path.of("src/main/resources/images/Storyline Prompt.txt"));
+            objective = Files.readString(Path.of("src/main/resources/images/Objective Prompt.txt"));
+            welcome = Files.readString(Path.of("src/main/resources/images/Welcome Prompt.txt"));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,0 +1,10 @@
+=======================================================================
+||                                                                   ||
+||                          OBJECTIVE                                ||
+||                                                                   ||
+||  Your mission is to uncover the mysterious technology possessed   ||
+||  by the indigenous tribe. To do this, you will need to explore    ||
+||  the island, solve puzzles, engage in combat, and navigate the    ||
+||  branching narrative.                                             ||
+||                                                                   ||
+=======================================================================
