@@ -20,10 +20,12 @@ public class Controller implements SplashApp {
     @Override
     public void start() {
         startGame();
+
     }
 
     private void startGame() {
         Introduction intro = new Introduction(prompter);
+        intro.showTitlePage();
         intro.gameOption();
         intro.showCoreStory();
     }
