@@ -1,0 +1,9 @@
+======================================================================
+||                                                                  ||
+||                      *** LOSS CONDITION ***                      ||
+||                                                                  ||
+||         If you DIE during your adventure, it's GAME OVER.        ||
+||                                                                  ||
+||       Beware of the many dangers of the island and survive!      ||
+||                                                                  ||
+======================================================================
