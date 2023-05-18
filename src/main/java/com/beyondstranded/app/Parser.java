@@ -6,7 +6,8 @@ import java.util.*;
 
 class Parser extends Controller{
 
-    public static void parseCommand(List<String> wordlist) {
+    public static boolean parseCommand(List<String> wordlist) {
+        boolean result = false;
         String verb;
         String noun;
         List<String> commands = new ArrayList<>(Arrays.asList("take", "go", "look", "quit", "move", "advance",
@@ -18,23 +19,21 @@ class Parser extends Controller{
 
         if (wordlist.size() != 2) {
             System.out.println("Only 2 word commands allowed!");
-            return;
         }
-
-
-        verb = wordlist.get(0).toLowerCase();
-        noun = wordlist.get(1).toLowerCase();
-
-        if (!commands.contains(verb)) {
-            System.out.println(verb + " is not an option");
-            return;
+        else {
+            verb = wordlist.get(0).toLowerCase();
+            noun = wordlist.get(1).toLowerCase();
+            if (!commands.contains(verb)) {
+                System.out.println(verb + " is not an option");
+            }
+            else if (!objects.contains(noun)) {
+                System.out.println(noun + " is not an option");
+            }
+            else {
+                result = true;
+            }
         }
-
-        if (!objects.contains(noun)) {
-            System.out.println(noun + " is not an option");
-            return;
-        }
-
+        return result;
     }
 
     public static List<String> wordList(String input) {
@@ -45,41 +44,39 @@ class Parser extends Controller{
         return strlist;
     }
 
-    public static String runCommand(String inputstr) {
-        List<String> wl;
-        String s = "bad";
-        String lowstr = inputstr.trim().toLowerCase();
-
-        if (!lowstr.equals("q")) {
-            if (lowstr.equals("")) {
-                s = "Enter a command";
-            } else {
-                wl = wordList(lowstr);
-                parseCommand(wl);
-                s = "ok";
-            }
-        }
-        return s;
-    }
-
-
-    //TEST
-    public static void main(String[] args) {
+    public List<String> userCommand() {
+        List<String> userInput = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
-        Parser parser = new Parser();
+        boolean validInput = false;
 
-        while (true) {
-            System.out.print("Enter a command: ");
-            String input = scanner.nextLine();
+        while (!validInput) {
+            System.out.print("\nEnter a command: ");
+            String input = scanner.nextLine().trim().toLowerCase();
 
-            if (input.equals("q")) {
-                break;
+            if (input.equals("quit")) {
+                userInput.add(0,"quit");
+                validInput = true;
             }
-
-            String result = parser.runCommand(input);
-            System.out.println(result);
+            else if(input.equals("")) {
+                System.out.printf("\nInvalid Input. Input is empty. Input: %s", input);
+            }
+            else {
+                List<String> wl = wordList(input);
+                validInput = parseCommand(wl);
+                if (validInput) {
+                    userInput = wl;
+                }
+            }
         }
 
         scanner.close();
+        return userInput;
+    }
+
+    //TEST
+    public static void main(String[] args) {
+        Parser parser = new Parser();
+        List<String> input = parser.userCommand();
+        System.out.println(input);
     }
 }
