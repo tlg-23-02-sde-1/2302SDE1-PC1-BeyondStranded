@@ -1,6 +1,6 @@
 package com.beyondstranded;
 
-class Player {
+public class Player {
 
 //fields
 //ctors

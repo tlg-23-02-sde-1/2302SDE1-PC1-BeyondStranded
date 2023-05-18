@@ -1,17 +1,27 @@
 package com.beyondstranded.app;
 
+import com.beyondstranded.Player;
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonElement;
 import com.util.apps.Prompter;
 import com.util.apps.SplashApp;
+
+import java.nio.file.Files;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 import java.util.Scanner;
 
 public class Controller implements SplashApp {
 
 //fields
-    private final Scanner scanner = new Scanner(System.in);
-    private final Prompter prompter = new Prompter(new Scanner(System.in));
+    private static Gson gson = new Gson();
+    private static Player player;
 
 //ctors
+
+
 //method
     public void execute() {
 
