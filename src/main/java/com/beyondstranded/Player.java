@@ -1,6 +1,6 @@
 package com.beyondstranded;
 
-class Player {
+public class Player {
 
     String name;
     Location location;
