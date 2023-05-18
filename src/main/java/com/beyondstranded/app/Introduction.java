@@ -24,15 +24,12 @@ class Introduction {
     }
 
     void showTitlePage() {
-        blankLines(1);
-        clear();
-        System.out.println(banner);
-        prompter.prompt("\n\t\t\t\t\tPress Enter to Continue:","","\t\t\t\t\tInvalid input. Only press Enter in your keyboard.\n");
+        showcasePrompt(banner);
     }
 
     void gameOption() {
-        blankLines(1);
         clear();
+        blankLines(1);
         System.out.println(newGame);
         prompter.prompt("\n\t\t\t\t\tEnter your command: ","(?i)^new game$","\t\t\t\t\tThis is not a valid option\n");
     }
@@ -44,8 +41,8 @@ class Introduction {
     }
 
     void showcasePrompt(String prompt) {
-        blankLines(1);
         clear();
+        blankLines(1);
         System.out.println(prompt);
         prompter.prompt("\n\t\t\t\t\tPress Enter to Continue:","","\t\t\t\t\tInvalid input. Only press Enter in your keyboard.\n");
     }
