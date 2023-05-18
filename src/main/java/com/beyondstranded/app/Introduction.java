@@ -14,6 +14,8 @@ class Introduction {
     private static String welcome;
     private static String newGame;
     private static String story;
+    private static String winCondition;
+    private static String lossCondition;
 
     private final Prompter prompter;
 
@@ -32,6 +34,8 @@ class Introduction {
         showcasePrompt(welcome);
         showcasePrompt(story);
         showcasePrompt(objective);
+        showcasePrompt(winCondition);
+        showcasePrompt(lossCondition);
     }
 
     void showcasePrompt(String prompt) {
@@ -47,6 +51,8 @@ class Introduction {
             story = Files.readString(Path.of("src/main/resources/images/Storyline Prompt.txt"));
             objective = Files.readString(Path.of("src/main/resources/images/Objective Prompt.txt"));
             welcome = Files.readString(Path.of("src/main/resources/images/Welcome Prompt.txt"));
+            winCondition = Files.readString(Path.of("src/main/resources/images/Win Condition Prompt.txt"));
+            lossCondition = Files.readString(Path.of("src/main/resources/images/Loss Condition Prompt.txt"));
         } catch (IOException e) {
             e.printStackTrace();
         }
