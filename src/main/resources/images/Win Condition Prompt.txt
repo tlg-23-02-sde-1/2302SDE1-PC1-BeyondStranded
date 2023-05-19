@@ -1,0 +1,10 @@
+ ======================================================================
+||                                                                   ||
+||                      *** WIN CONDITION ***                        ||
+||                                                                   ||
+||  To WIN the game, you must obtain the advanced technology         ||
+||  possessed by the indigenous tribe and escape the island with it. ||
+||                                                                   ||
+||                     Good luck, adventurer!                        ||
+||                                                                   ||
+=======================================================================
