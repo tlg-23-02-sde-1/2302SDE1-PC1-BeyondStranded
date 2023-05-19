@@ -1,10 +1,8 @@
 package com.beyondstranded.app;
 
-import java.io.IOException;
-import java.sql.Array;
 import java.util.*;
 
-class Parser extends Controller{
+class Parser {
 
     public static boolean parseCommand(List<String> wordlist) {
         boolean result = false;
@@ -69,7 +67,7 @@ class Parser extends Controller{
             }
         }
 
-        scanner.close();
+        //scanner.close();
         return userInput;
     }
 
