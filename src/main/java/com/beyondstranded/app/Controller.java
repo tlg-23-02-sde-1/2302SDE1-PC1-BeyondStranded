@@ -6,9 +6,11 @@ import com.beyondstranded.Player;
 import com.google.gson.Gson;
 import com.util.apps.Prompter;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
+import static com.util.apps.Console.*;
+import java.io.*;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -92,15 +94,15 @@ public class Controller {
 
     private List<Location> parseLocationsFromFile() {
         Gson gson = new Gson();
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new FileReader("src/main/resources/JSON/locations.txt"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        // Parse the JSON to LocationsWrapper
-        LocationsWrapper locationsWrapper = gson.fromJson(br, LocationsWrapper.class);
 
-        return locationsWrapper.getLocations();
+        try (InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/JSON/locations.txt"))) {
+            // Parse the JSON to LocationsWrapper
+            LocationsWrapper locationsWrapper = gson.fromJson(isr, LocationsWrapper.class);
+
+            return locationsWrapper.getLocations();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
     }
 }
