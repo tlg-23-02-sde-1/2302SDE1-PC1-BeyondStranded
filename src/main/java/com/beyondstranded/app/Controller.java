@@ -1,38 +1,27 @@
 package com.beyondstranded.app;
 
+import com.beyondstranded.Location;
+import com.beyondstranded.LocationsWrapper;
 import com.beyondstranded.Player;
 import com.google.gson.Gson;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonElement;
 import com.util.apps.Prompter;
-import com.util.apps.SplashApp;
 
-import java.nio.file.Files;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import static com.util.apps.Console.*;
+import java.io.*;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
-public class Controller implements SplashApp {
+public class Controller {
 
-//fields
+    //fields
     private final Prompter prompter = new Prompter(new Scanner(System.in));
-    private static Gson gson = new Gson();
-    private static Player player;
-    private Parser parser;
+    private final Parser parser = new Parser();
 
-//ctors
-
-
-//method
-    public void execute() {
-
-    }
-
-    @Override
+    // business methods
     public void start() {
         startGame();
-
     }
 
     private void startGame() {
@@ -40,11 +29,72 @@ public class Controller implements SplashApp {
         intro.showTitlePage();
         intro.gameOption();
         intro.showCoreStory();
+        gameStarted();
     }
 
-    //business
-    //accessor get/set/toString
-    //helper
-//inner class
+    private void gameStarted() {
+        boolean gameOver = false;
+        List<Location> allLocation;
+        allLocation = parseLocationsFromFile();
+        Player player = new Player(getLocationInfo("Awakening", allLocation));
+        List<String> userInput;
 
+        while (!gameOver) {
+            printLocationInfo(player.getLocation().getName(), allLocation);
+            userInput = parser.userCommand();
+            if (userInput.get(0).equals("go")) {
+                // Get the map of directions from the current location
+                Map<String, String> directions = player.getLocation().getDirections();
+
+                // If the user-provided direction is a key in the map,
+                // get the location name it maps to
+                if (directions.containsKey(userInput.get(1))) {
+                    String newLocationName = directions.get(userInput.get(1));
+
+                    // Get the Location object corresponding to the new location name
+                    Location newLocation = getLocationInfo(newLocationName, allLocation);
+
+                    // Set the player's location to the new location
+                    player.setLocation(newLocation);
+                } else {
+                    System.out.println("You can't go " + userInput.get(1) + " from here.");
+                }
+            }
+        }
+    }
+
+    private void printLocationInfo(String locationName, List<Location> allLocations) {
+        clear();
+        for (Location location : allLocations) {
+            if (location.getName().equals(locationName)) {
+                System.out.println("Location: " + location.getName());
+                System.out.println("Description: " + location.getDescription());
+                System.out.println("What is located here: " + location.getItems());
+            }
+        }
+    }
+
+    private Location getLocationInfo(String locationName, List<Location> allLocations) {
+        Location currentLocation = null;
+        for (Location location : allLocations) {
+            if (location.getName().equals(locationName)) {
+                return currentLocation = location;
+            }
+        }
+        return currentLocation;
+    }
+
+    private List<Location> parseLocationsFromFile() {
+        Gson gson = new Gson();
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader("src/main/resources/JSON/locations.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        // Parse the JSON to LocationsWrapper
+        LocationsWrapper locationsWrapper = gson.fromJson(br, LocationsWrapper.class);
+
+        return locationsWrapper.getLocations();
+    }
 }

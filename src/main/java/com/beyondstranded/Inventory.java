@@ -1,6 +1,6 @@
 package com.beyondstranded;
 
-class Inventory {
+public class Inventory {
 
 //fields
 //ctors
