@@ -6,6 +6,7 @@ import com.beyondstranded.Player;
 import com.google.gson.Gson;
 import com.util.apps.Prompter;
 
+
 import static com.util.apps.Console.*;
 import java.io.*;
 
@@ -13,6 +14,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+import static com.util.apps.Console.clear;
 
 public class Controller {
 
@@ -60,6 +63,10 @@ public class Controller {
                 } else {
                     System.out.println("You can't go " + userInput.get(1) + " from here.");
                 }
+            // if at any time the player types quit the game will quit
+            }else if(userInput.get(0).equals("quit")){
+                gameOver = true;
+                System.out.println("Exiting the game. Goodbye!");
             }
         }
     }
