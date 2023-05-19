@@ -53,7 +53,7 @@ class Parser {
 
             if (input.equals("quit")) {
                 userInput.add(0,"quit");
-                validInput = true;
+                break;
             }
             else if(input.equals("")) {
                 System.out.printf("\nInvalid Input. Input is empty. Input: %s", input);
