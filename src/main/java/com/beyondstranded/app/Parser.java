@@ -16,7 +16,7 @@ class Parser {
                 "hull", "help", "bottle", "water", "map", "fire", "tool", "friends", "chief", "healer", "hunter"));
 
         if (wordlist.size() != 2) {
-            System.out.println("Only 2 word commands allowed!");
+            System.out.println("ERROR: Only 2 word commands allowed!");
         }
         else {
             verb = wordlist.get(0).toLowerCase();
@@ -56,6 +56,7 @@ class Parser {
                 validInput = true;
             }
             else if(input.equals("")) {
+                System.out.println("Error\n");
                 System.out.printf("\nInvalid Input. Input is empty. Input: %s", input);
             }
             else {
@@ -63,6 +64,7 @@ class Parser {
                 validInput = parseCommand(wl);
                 if (validInput) {
                     userInput = wl;
+                    System.out.println("status: 200");
                 }
             }
         }
