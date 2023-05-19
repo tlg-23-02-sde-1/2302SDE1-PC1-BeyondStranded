@@ -2,9 +2,10 @@ package com.beyondstranded.app;
 
 import com.util.apps.Prompter;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import static com.util.apps.Console.*;
 
@@ -33,7 +34,7 @@ class Introduction {
         clear();
         blankLines(1);
         System.out.println(newGame);
-        prompter.prompt("\n\t\t\t\t\tEnter your command: ","(?i)^new game$","\t\t\t\t\tThis is not a valid option\n");
+        prompter.prompt("\n\t\t\tEnter your command: ","(?i)^new game$","\t\t\tThis is not a valid option\n");
     }
 
     void showCoreStory() {
@@ -48,20 +49,29 @@ class Introduction {
         clear();
         blankLines(1);
         System.out.println(prompt);
-        prompter.prompt("\n\t\t\t\t\tPress Enter to Continue:","","\t\t\t\t\tInvalid input. Only press Enter in your keyboard.\n");
+        prompter.prompt("\n\t\t\tPress Enter to Continue:","","\t\t\tInvalid input. Only press Enter in your keyboard.\n");
     }
 
     static {
         try {
-            banner = Files.readString(Path.of("src/main/resources/ASCII_Art/Banner.txt"));
-            newGame = Files.readString(Path.of("src/main/resources/images/New Game Prompt.txt"));
-            story = Files.readString(Path.of("src/main/resources/images/Storyline Prompt.txt"));
-            objective = Files.readString(Path.of("src/main/resources/images/Objective Prompt.txt"));
-            welcome = Files.readString(Path.of("src/main/resources/images/Welcome Prompt.txt"));
-            winCondition = Files.readString(Path.of("src/main/resources/images/Win Condition Prompt.txt"));
-            lossCondition = Files.readString(Path.of("src/main/resources/images/Loss Condition Prompt.txt"));
+            banner = readResource("/ASCII_Art/Banner.txt");
+            newGame = readResource("/images/New Game Prompt.txt");
+            story = readResource("/images/Storyline Prompt.txt");
+            objective = readResource("/images/Objective Prompt.txt");
+            welcome = readResource("/images/Welcome Prompt.txt");
+            winCondition = readResource("/images/Win Condition Prompt.txt");
+            lossCondition = readResource("/images/Loss Condition Prompt.txt");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static String readResource(String path) throws IOException {
+        try (InputStream is = Introduction.class.getResourceAsStream(path)) {
+            if (is == null) {
+                throw new FileNotFoundException("Resource not found: " + path);
+            }
+            return new String(is.readAllBytes(), StandardCharsets.UTF_8);
         }
     }
 }
