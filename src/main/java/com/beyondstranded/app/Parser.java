@@ -1,7 +1,5 @@
 package com.beyondstranded.app;
 
-import java.io.IOException;
-import java.sql.Array;
 import java.util.*;
 
 class Parser extends Controller{
@@ -45,7 +43,7 @@ class Parser extends Controller{
         return strlist;
     }
 
-    public static String runCommand(String inputstr) {
+    public static boolean runCommand(String inputstr) {
         List<String> wl;
         String s = "bad";
         String lowstr = inputstr.trim().toLowerCase();

@@ -2,14 +2,8 @@ package com.beyondstranded.app;
 
 import com.beyondstranded.Player;
 import com.google.gson.Gson;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonElement;
 import com.util.apps.Prompter;
 import com.util.apps.SplashApp;
-
-import java.nio.file.Files;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 
 import java.util.Scanner;
 
@@ -39,6 +33,19 @@ public class Controller implements SplashApp {
         intro.showTitlePage();
         intro.gameOption();
         intro.showCoreStory();
+    }
+
+    private void handleUserInput(Introduction intro){
+        boolean quit = false;
+        while(!quit){
+            intro.gameOption();
+            String userInput = prompter.prompt("\n\t\t\t\t\tEnter your command: ", "(?i)^(quit|[a-z]+)$", "\t\t\t\t\tThis is not a valid option\n");
+            if (Parser.runCommand(userInput)){
+                quit = true;
+            } else {
+//                handleMovesInput(intro);
+            }
+        }
     }
     //business
     //accessor get/set/toString
