@@ -69,7 +69,7 @@ public class Controller {
         clear();
         for (Location location : allLocations) {
             if (location.getName().equals(locationName)) {
-                System.out.println("Location: " + location.getName());
+                System.out.printf("Location: %s\n\n", location.getName());
                 String[] description = location.getDescription().split("\\.");
                 for (String sentence : description) {
                     System.out.println(sentence.trim());
