@@ -6,14 +6,8 @@ import com.beyondstranded.Player;
 import com.google.gson.Gson;
 import com.util.apps.Prompter;
 
-
-import static com.util.apps.Console.*;
 import java.io.*;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 import static com.util.apps.Console.clear;
 
@@ -76,8 +70,11 @@ public class Controller {
         for (Location location : allLocations) {
             if (location.getName().equals(locationName)) {
                 System.out.println("Location: " + location.getName());
-                System.out.println("Description: " + location.getDescription());
-                System.out.println("What is located here: " + location.getItems());
+                String[] description = location.getDescription().split("\\.");
+                for (String sentence : description) {
+                    System.out.println(sentence.trim());
+                }
+                System.out.println("\nWhat is located here: " + location.getItems());
             }
         }
     }
