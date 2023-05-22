@@ -1,6 +1,13 @@
 {
   "items": [
     {
+      "name": "Radio",
+      "description": "A battered but still functional radio. Might be useful for calling for help.",
+      "location": "Helicopter Crash",
+      "type": "Puzzle",
+      "use": "Call for Help"
+    },
+    {
       "name": "First Aid Kit",
       "description": "A kit containing basic medical supplies. Can be used to heal injuries.",
       "location": "Helicopter Crash",
