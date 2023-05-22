@@ -3,13 +3,13 @@ package com.beyondstranded;
 import java.util.List;
 
 public class ItemsWrapper {
-    private List<Item> item;
+    private List<Item> items;
 
     public List<Item> getItems() {
-        return item;
+        return items;
     }
 
     public void setItems(List<Item> items) {
-        this.item = items;
+        this.items = items;
     }
 }
