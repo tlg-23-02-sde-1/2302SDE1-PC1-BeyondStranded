@@ -17,6 +17,7 @@ public class Controller {
     private final Parser parser = new Parser();
     private final Introduction intro = new Introduction(prompter);
     private final Commands commands = new Commands();
+    private final int maxHealth = 50;
 
 
     // business methods
@@ -45,11 +46,14 @@ public class Controller {
         boolean gameOver = false;
         List<Location> allLocation;
         allLocation = parseLocationsFromFile();
-        Player player = new Player(getLocationInfo("Awakening", allLocation));
+        List<Item> items = new ArrayList<>();
+        Player player = new Player(getLocationInfo("Awakening", allLocation),maxHealth, items);
         List<String> userInput;
 
         while (!gameOver) {
             printLocationInfo(player.getLocation().getName(), allLocation);
+            System.out.println("\nPlayer Health: " + player.getHealth());
+            System.out.println("\nPlayer Inventory: " + player.getInventory());
             userInput = parser.userCommand();
             switch (userInput.get(0)) {
                 case "go":
@@ -110,7 +114,6 @@ public class Controller {
             return Collections.emptyMap();
         }
     }
-
 
     List<Location> parseLocationsFromFile() {
         Gson gson = new Gson();
