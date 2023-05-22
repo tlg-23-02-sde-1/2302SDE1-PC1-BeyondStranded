@@ -7,6 +7,7 @@ import com.util.apps.Prompter;
 import java.io.*;
 import java.util.*;
 
+import static com.beyondstranded.app.Introduction.readResource;
 import static com.util.apps.Console.clear;
 
 public class Controller {
@@ -29,12 +30,13 @@ public class Controller {
         intro.gameOver();
     }
 
-    private void displayHelp(){
-//        List<String> commands = parser.getCommands();
-        System.out.println("Available Commands");
-//        for (String command : commands){
-//           System.out.println("- " + command);
-//        }
+    private void displayHelp() {
+        try {
+            String helpText = readResource("/images/help.txt");
+            intro.showHelp(helpText);
+        } catch (IOException e) {
+            System.out.println("Unable to display help.");
+        }
     }
 
     private void gameStarted() {

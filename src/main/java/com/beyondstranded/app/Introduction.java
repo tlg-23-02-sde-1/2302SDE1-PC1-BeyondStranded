@@ -56,8 +56,7 @@ class Introduction {
     void showHelp(String prompt){
         clear();
         blankLines(1);
-        System.out.println(prompt);
-        prompter.prompt("\n\t\t\tPress Enter to Continue.\t\t\t\n");
+        showcasePrompt(help);
     }
 
     static {
@@ -75,7 +74,7 @@ class Introduction {
         }
     }
 
-    private static String readResource(String path) throws IOException {
+    static String readResource(String path) throws IOException {
         try (InputStream is = Introduction.class.getResourceAsStream(path)) {
             if (is == null) {
                 throw new FileNotFoundException("Resource not found: " + path);
