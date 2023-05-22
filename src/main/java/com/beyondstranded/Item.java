@@ -10,12 +10,12 @@ public class Item {
 
     //ctors
 
-    public Item(String use, String name, String description, String location, Types types) {
+    public Item(String use, String name) {
         this.use = use;
         this.name = name;
-        this.description = description;
-        this.location = location;
-        this.types = types;
+//        this.description = description;
+//        this.location = location;
+//        this.types = types;
     }
 
     public String getName() {
@@ -26,11 +26,28 @@ public class Item {
         this.name = name;
     }
 
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getUse() {
+        return use;
+    }
+
+    public void setUse(String use) {
+        this.use = use;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "name='" + name + '\'' +
+                ", use='" + use + '\'' +
+                '}';
     }
 }
