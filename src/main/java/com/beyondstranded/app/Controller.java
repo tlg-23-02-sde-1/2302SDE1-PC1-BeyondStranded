@@ -1,8 +1,6 @@
 package com.beyondstranded.app;
 
-import com.beyondstranded.Location;
-import com.beyondstranded.LocationsWrapper;
-import com.beyondstranded.Player;
+import com.beyondstranded.*;
 import com.google.gson.Gson;
 import com.util.apps.Prompter;
 
@@ -97,6 +95,26 @@ public class Controller {
             LocationsWrapper locationsWrapper = gson.fromJson(isr, LocationsWrapper.class);
 
             return locationsWrapper.getLocations();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+    //test function for modifying the Json
+    private List<Item> modifyJsonItem() {
+        Gson gson = new Gson();
+        // Read the JSON file
+        try (InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/JSON/items.txt"))){
+
+            // Parse the JSON string
+            ItemsWrapper itemsWrapper = gson.fromJson(isr, ItemsWrapper.class);
+
+            return itemsWrapper.getItems();
+            // Modify the JSON data (writer)
+
+            // Write the updated JSON to a file
+
         } catch (IOException e) {
             e.printStackTrace();
             return Collections.emptyList();
