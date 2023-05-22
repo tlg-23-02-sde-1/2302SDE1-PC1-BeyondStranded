@@ -14,6 +14,7 @@ public class Controller {
     //fields
     private final Prompter prompter = new Prompter(new Scanner(System.in));
     private final Parser parser = new Parser();
+    private final Introduction intro = new Introduction(prompter);
 
     // business methods
     public void start() {
@@ -21,11 +22,19 @@ public class Controller {
     }
 
     private void startGame() {
-        Introduction intro = new Introduction(prompter);
         intro.showTitlePage();
         intro.gameOption();
         intro.showCoreStory();
         gameStarted();
+        intro.gameOver();
+    }
+
+    private void displayHelp(){
+//        List<String> commands = parser.getCommands();
+        System.out.println("Available Commands");
+//        for (String command : commands){
+//           System.out.println("- " + command);
+//        }
     }
 
     private void gameStarted() {
@@ -58,7 +67,9 @@ public class Controller {
             // if at any time the player types quit the game will quit
             }else if(userInput.get(0).equals("quit")){
                 gameOver = true;
-                System.out.println("Exiting the game. Goodbye!");
+                intro.gameOver();
+            } else if(userInput.get(0).equals("help")){
+                displayHelp();
             }
         }
     }

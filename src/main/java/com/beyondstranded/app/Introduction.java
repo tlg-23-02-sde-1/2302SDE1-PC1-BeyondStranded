@@ -18,6 +18,7 @@ class Introduction {
     private static String story;
     private static String winCondition;
     private static String lossCondition;
+    private static String help;
 
 
     private final Prompter prompter;
@@ -52,6 +53,13 @@ class Introduction {
         prompter.prompt("\n\t\t\tPress Enter to Continue:","","\t\t\tInvalid input. Only press Enter in your keyboard.\n");
     }
 
+    void showHelp(String prompt){
+        clear();
+        blankLines(1);
+        System.out.println(prompt);
+        prompter.prompt("\n\t\t\tPress Enter to Continue.\t\t\t\n");
+    }
+
     static {
         try {
             banner = readResource("/ASCII_Art/Banner.txt");
@@ -61,6 +69,7 @@ class Introduction {
             welcome = readResource("/images/Welcome Prompt.txt");
             winCondition = readResource("/images/Win Condition Prompt.txt");
             lossCondition = readResource("/images/Loss Condition Prompt.txt");
+            help = readResource("/images/help.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -73,5 +82,12 @@ class Introduction {
             }
             return new String(is.readAllBytes(), StandardCharsets.UTF_8);
         }
+    }
+
+    public void gameOver() {
+        clear();
+        blankLines(1);
+        System.out.println();
+        prompter.prompt("\n\t\t\tGame Over \t\t\t\n");
     }
 }
