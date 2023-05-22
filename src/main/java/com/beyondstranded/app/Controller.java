@@ -18,6 +18,7 @@ public class Controller {
     private final Introduction intro = new Introduction(prompter);
     private final Commands commands = new Commands();
     private final int maxHealth = 50;
+    private Player player;
 
 
     // business methods
@@ -47,7 +48,7 @@ public class Controller {
         List<Location> allLocation;
         allLocation = parseLocationsFromFile();
         List<Item> items = new ArrayList<>();
-        Player player = new Player(getLocationInfo("Awakening", allLocation),maxHealth, items);
+        player = new Player(getLocationInfo("Awakening", allLocation),maxHealth, items);
         List<String> userInput;
 
         while (!gameOver) {
@@ -68,6 +69,9 @@ public class Controller {
                 case "look":
                     commands.lookCommand(userInput, player);
                     break;
+                case "talk":
+                    // Create method to talk in Commands
+                    System.out.println(loadNPC().getDescription());
             }
         }
     }
@@ -113,6 +117,24 @@ public class Controller {
             e.printStackTrace();
             return Collections.emptyMap();
         }
+    }
+
+    NPC loadNPC() {
+        Gson gson = new Gson();
+        NPC roomNPC = null;
+
+        try (InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/JSON/npc.txt"))) {
+            // Parse the JSON to ItemsWrapper
+            NPCWrapper npcWrapper = gson.fromJson(isr, NPCWrapper.class);
+            for (NPC npc : npcWrapper.getNpc()) {
+                if (player.getLocation().getName().equals(npc.getLocation())) {
+                    roomNPC = npc;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return roomNPC;
     }
 
     List<Location> parseLocationsFromFile() {

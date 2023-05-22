@@ -1,0 +1,22 @@
+{
+  "npc": [
+    {
+      "name": "chief",
+      "description": "Greetings stranger, My name is Chief. This land can be treacherous. Go forth and find shelter.",
+      "location": "Village",
+      "type": "Ally"
+    },
+    {
+      "name": "healer",
+      "description": "Help stranger, My foot is trapped in a rock",
+      "location": "Village",
+      "type": "Ally"
+    },
+    {
+      "name": "hunter",
+      "description": "You're in my world now, and I've got the upper hand.",
+      "location": "Cave",
+      "type": "Foe"
+    }
+  ]
+}
