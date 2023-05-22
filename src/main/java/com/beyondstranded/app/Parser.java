@@ -13,7 +13,7 @@ class Parser {
         List<String> objects = new ArrayList<>(Arrays.asList("tree", "head", "jungle", "cave", "radio", "first aid ",
                 "kit", "torch", "waterfall", "cliff", "village", "shore", "forest", "pool", "north", "south", "east", "west", "sea",
                 "up", "down", "shell", "driftwood", "berries", "eye", "sound", "crash", "helicopter", "peak", "ship",
-                "hull", "help", "bottle", "water", "map", "fire", "tool", "friends", "chief", "healer", "hunter"));
+                "hull", "help", "bottle", "water", "map", "fire", "tool", "rope", "friends", "chief", "healer", "hunter"));
 
         if (wordlist.size() != 2) {
             System.out.println("ERROR: Only 2 word commands allowed!");
