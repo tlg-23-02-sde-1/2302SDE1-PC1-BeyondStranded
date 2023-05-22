@@ -1,17 +1,11 @@
 package com.beyondstranded.app;
 
-import com.beyondstranded.Location;
-import com.beyondstranded.LocationsWrapper;
-import com.beyondstranded.Player;
+import com.beyondstranded.*;
 import com.google.gson.Gson;
 import com.util.apps.Prompter;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 import static com.util.apps.Console.clear;
 
@@ -84,9 +78,12 @@ public class Controller {
         clear();
         for (Location location : allLocations) {
             if (location.getName().equals(locationName)) {
-                System.out.println("Location: " + location.getName());
-                System.out.println("Description: " + location.getDescription());
-                System.out.println("What is located here: " + location.getItems());
+                System.out.printf("Location: %s\n\n", location.getName());
+                String[] description = location.getDescription().split("\\.");
+                for (String sentence : description) {
+                    System.out.println(sentence.trim());
+                }
+                System.out.println("\nWhat is located here: " + location.getItems());
             }
         }
     }
@@ -109,6 +106,26 @@ public class Controller {
             LocationsWrapper locationsWrapper = gson.fromJson(isr, LocationsWrapper.class);
 
             return locationsWrapper.getLocations();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+    //test function for modifying the Json
+    private List<Item> modifyJsonItem() {
+        Gson gson = new Gson();
+        // Read the JSON file
+        try (InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/JSON/items.txt"))){
+
+            // Parse the JSON string
+            ItemsWrapper itemsWrapper = gson.fromJson(isr, ItemsWrapper.class);
+
+            return itemsWrapper.getItems();
+            // Modify the JSON data (writer)
+
+            // Write the updated JSON to a file
+
         } catch (IOException e) {
             e.printStackTrace();
             return Collections.emptyList();
