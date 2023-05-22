@@ -1,6 +1,7 @@
 package com.beyondstranded;
 
 public class Item {
+
     //fields
     private String use;
     private String name;
@@ -32,5 +33,20 @@ public class Item {
 
     public void setDescription(String description) {
         this.description = description;
+
+    public String getUse() {
+        return use;
+    }
+
+    public void setUse(String use) {
+        this.use = use;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "name='" + name + '\'' +
+                ", use='" + use + '\'' +
+                '}';
     }
 }
