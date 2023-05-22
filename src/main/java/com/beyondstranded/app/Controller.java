@@ -1,10 +1,16 @@
 package com.beyondstranded.app;
 
 import com.beyondstranded.*;
-import com.google.gson.Gson;
+import com.google.gson.*;
 import com.util.apps.Prompter;
 
+
+import static com.util.apps.Console.*;
 import java.io.*;
+
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 import static com.beyondstranded.app.Introduction.readResource;
@@ -16,6 +22,7 @@ public class Controller {
     private final Prompter prompter = new Prompter(new Scanner(System.in));
     private final Parser parser = new Parser();
     private final Introduction intro = new Introduction(prompter);
+
 
     // business methods
     public void start() {
@@ -66,8 +73,8 @@ public class Controller {
                 } else {
                     System.out.println("You can't go " + userInput.get(1) + " from here.");
                 }
-            // if at any time the player types quit the game will quit
-            }else if(userInput.get(0).equals("quit")){
+                // if at any time the player types quit the game will quit
+            } else if (userInput.get(0).equals("quit")) {
                 gameOver = true;
                 intro.gameOver();
             } else if(userInput.get(0).equals("help")){
@@ -80,12 +87,9 @@ public class Controller {
         clear();
         for (Location location : allLocations) {
             if (location.getName().equals(locationName)) {
-                System.out.printf("Location: %s\n\n", location.getName());
-                String[] description = location.getDescription().split("\\.");
-                for (String sentence : description) {
-                    System.out.println(sentence.trim());
-                }
-                System.out.println("\nWhat is located here: " + location.getItems());
+                System.out.println("Location: " + location.getName());
+                System.out.println("Description: " + location.getDescription());
+                System.out.println("What is located here: " + location.getItems());
             }
         }
     }
@@ -114,23 +118,5 @@ public class Controller {
         }
     }
 
-    //test function for modifying the Json
-    private List<Item> modifyJsonItem() {
-        Gson gson = new Gson();
-        // Read the JSON file
-        try (InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/JSON/items.txt"))){
 
-            // Parse the JSON string
-            ItemsWrapper itemsWrapper = gson.fromJson(isr, ItemsWrapper.class);
-
-            return itemsWrapper.getItems();
-            // Modify the JSON data (writer)
-
-            // Write the updated JSON to a file
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Collections.emptyList();
-        }
-    }
 }

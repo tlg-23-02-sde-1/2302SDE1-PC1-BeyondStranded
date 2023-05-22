@@ -1,0 +1,74 @@
+{
+  "items": [
+    {
+      "name": "Radio",
+      "description": "A battered but still functional radio. Might be useful for calling for help.",
+      "location": "Helicopter Crash",
+      "type": "Puzzle",
+      "use": "Call for Help"
+    },
+    {
+      "name": "First Aid Kit",
+      "description": "A kit containing basic medical supplies. Can be used to heal injuries.",
+      "location": "Helicopter Crash",
+      "type": "Healing",
+      "use": "Restore Health"
+    },
+    {
+      "name": "Torch",
+      "description": "A basic torch. Can be used to light up dark areas.",
+      "location": "Cave",
+      "type": "Puzzle",
+      "use": "Provide Light"
+    },
+    {
+      "name": "Rope",
+      "description": "A long piece of sturdy rope. Might be useful for climbing or tying things together.",
+      "location": "Waterfall",
+      "type": "Puzzle",
+      "use": "Climb/Secure"
+    },
+    {
+      "name": "Shell",
+      "description": "A beautiful seashell. Could be used as a makeshift tool.",
+      "location": "Rocky Shore",
+      "type": "Puzzle",
+      "use": "Maybe you could use this to scoop or pry something."
+    },
+    {
+      "name": "Driftwood",
+      "description": "A piece of driftwood. Could be used to craft something.",
+      "location": "Rocky Shore",
+      "type": "Puzzle",
+      "use": "Crafting"
+    },
+    {
+      "name": "Berry Bush",
+      "description": "A bush full of ripe berries. Could be used for sustenance.",
+      "location": "Forest Clearing",
+      "type": "Food",
+      "use": "Restore Energy"
+    },
+    {
+      "name": "Bottle",
+      "description": "A glass bottle. Could be used to carry water or other liquids.",
+      "location": "Cove",
+      "type": "Puzzle",
+      "use": "You could use this to carry water or collect samples."
+    },
+    {
+      "name": "Map",
+      "description": "A water-damaged map from the shipwreck. Some areas are still legible.",
+      "location": "Ship Wreck",
+      "type": "Puzzle",
+      "use": "This map could help you navigate the island."
+    },
+    {
+      "name": "Compass",
+      "description": "A rusty old compass. Still points north, which is something.",
+      "location": "Ship Wreck",
+      "type": "Puzzle",
+      "use": "Use this to help you navigate the island."
+    }
+  ]
+}
