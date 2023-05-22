@@ -15,6 +15,7 @@ public class Controller {
     private final Prompter prompter = new Prompter(new Scanner(System.in));
     private final Parser parser = new Parser();
     private final Introduction intro = new Introduction(prompter);
+    private final Commands commands = new Commands();
 
     // business methods
     public void start() {
@@ -47,29 +48,19 @@ public class Controller {
         while (!gameOver) {
             printLocationInfo(player.getLocation().getName(), allLocation);
             userInput = parser.userCommand();
-            if (userInput.get(0).equals("go")) {
-                // Get the map of directions from the current location
-                Map<String, String> directions = player.getLocation().getDirections();
-
-                // If the user-provided direction is a key in the map,
-                // get the location name it maps to
-                if (directions.containsKey(userInput.get(1))) {
-                    String newLocationName = directions.get(userInput.get(1));
-
-                    // Get the Location object corresponding to the new location name
-                    Location newLocation = getLocationInfo(newLocationName, allLocation);
-
-                    // Set the player's location to the new location
-                    player.setLocation(newLocation);
-                } else {
-                    System.out.println("You can't go " + userInput.get(1) + " from here.");
-                }
-            // if at any time the player types quit the game will quit
-            }else if(userInput.get(0).equals("quit")){
-                gameOver = true;
-                intro.gameOver();
-            } else if(userInput.get(0).equals("help")){
-                displayHelp();
+            switch (userInput.get(0)) {
+                case "go":
+                    player = commands.goCommand(userInput, player, allLocation);
+                    break;
+                case "quit":
+                    gameOver = true;
+                    break;
+                case "help":
+                    displayHelp();
+                    break;
+                case "look":
+                    commands.lookCommand(userInput, player);
+                    break;
             }
         }
     }
@@ -88,7 +79,7 @@ public class Controller {
         }
     }
 
-    private Location getLocationInfo(String locationName, List<Location> allLocations) {
+    static Location getLocationInfo(String locationName, List<Location> allLocations) {
         Location currentLocation = null;
         for (Location location : allLocations) {
             if (location.getName().equals(locationName)) {
@@ -98,7 +89,27 @@ public class Controller {
         return currentLocation;
     }
 
-    private List<Location> parseLocationsFromFile() {
+    static Map<String, Item> loadItemsIntoMap() {
+        Gson gson = new Gson();
+
+        try (InputStreamReader isr = new InputStreamReader(Controller.class.getResourceAsStream("/JSON/items.txt"))) {
+            // Parse the JSON to ItemsWrapper
+            ItemsWrapper itemsWrapper = gson.fromJson(isr, ItemsWrapper.class);
+
+            Map<String, Item> itemsMap = new HashMap<>();
+            for (Item item : itemsWrapper.getItems()) {
+                itemsMap.put(item.getName().toLowerCase(), item);
+            }
+
+            return itemsMap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Collections.emptyMap();
+        }
+    }
+
+
+    List<Location> parseLocationsFromFile() {
         Gson gson = new Gson();
 
         try (InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/JSON/locations.txt"))) {
@@ -106,6 +117,20 @@ public class Controller {
             LocationsWrapper locationsWrapper = gson.fromJson(isr, LocationsWrapper.class);
 
             return locationsWrapper.getLocations();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+    List<Item> parseItemsFromFile() {
+        Gson gson = new Gson();
+
+        try (InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/JSON/items.txt"))) {
+            // Parse the JSON to LocationsWrapper
+            ItemsWrapper itemsWrapper = gson.fromJson(isr, ItemsWrapper.class);
+
+            return itemsWrapper.getItems();
         } catch (IOException e) {
             e.printStackTrace();
             return Collections.emptyList();
