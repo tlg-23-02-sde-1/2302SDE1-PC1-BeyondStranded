@@ -1,5 +1,4 @@
-{
-  "locations": [
+[
     {
       "name": "Awakening",
       "directions": {
@@ -132,5 +131,4 @@
      "items": ["map", "compass"],
      "NPC": false
      }
-  ]
-}
+]

@@ -19,6 +19,7 @@ class Introduction {
     private static String winCondition;
     private static String lossCondition;
     private static String help;
+    private static String gameOver;
     private static String mapStart;
 
 
@@ -37,6 +38,12 @@ class Introduction {
         blankLines(1);
         System.out.println(newGame);
         prompter.prompt("\n\t\t\tEnter your command: ","(?i)^new game$","\t\t\tThis is not a valid option\n");
+    }
+
+    void gameOver() {
+        clear();
+        blankLines(1);
+        System.out.println(gameOver);
     }
 
     void showCoreStory() {
@@ -75,6 +82,7 @@ class Introduction {
             winCondition = readResource("/images/Win Condition Prompt.txt");
             lossCondition = readResource("/images/Loss Condition Prompt.txt");
             help = readResource("/images/Help.txt");
+            gameOver = readResource("/images/Game Over.txt");
             mapStart = readResource("/ASCII_Art/MapStart.txt");
         } catch (IOException e) {
             e.printStackTrace();
@@ -88,12 +96,5 @@ class Introduction {
             }
             return new String(is.readAllBytes(), StandardCharsets.UTF_8);
         }
-    }
-
-    public void gameOver() {
-        clear();
-        blankLines(1);
-        System.out.println();
-        prompter.prompt("\n\t\t\tGame Over \t\t\t\n");
     }
 }
