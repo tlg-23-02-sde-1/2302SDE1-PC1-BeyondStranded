@@ -2,21 +2,34 @@
   "npc": [
     {
       "name": "chief",
-      "description": "Greetings stranger, My name is Chief. This land can be treacherous. Go forth and find shelter.",
+      "dialogue": [
+        "Greetings stranger, My name is Chief.",
+        "This land can be treacherous.",
+        "Go forth and find shelter."
+      ],
       "location": "Village",
       "type": "Ally"
     },
     {
       "name": "healer",
-      "description": "Help stranger, My foot is trapped in a rock",
+      "dialogue": [
+        "Help stranger, My foot is trapped in a rock.",
+        "Can you find a lever to free my foot?",
+        "I could heal you in return for your help."
+      ],
       "location": "Village",
       "type": "Ally"
     },
     {
       "name": "hunter",
-      "description": "You're in my world now, and I've got the upper hand.",
+      "dialogue": [
+        "You're in my world now, and I've got the upper hand.",
+        "Have you come here looking for trouble?",
+        "I don't trust strangers easily."
+      ],
       "location": "Cave",
       "type": "Foe"
     }
   ]
 }
+
