@@ -2,10 +2,13 @@ package com.beyondstranded.app;
 
 import com.beyondstranded.*;
 import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 import com.util.apps.Prompter;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static com.util.apps.Console.clear;
 
@@ -92,16 +95,19 @@ public class Controller {
     static Map<String, Item> loadItemsIntoMap() {
         Gson gson = new Gson();
 
+        //noinspection ConstantConditions
         try (InputStreamReader isr = new InputStreamReader(Controller.class.getResourceAsStream("/JSON/items.txt"))) {
+            List<Item> itemsList = gson.fromJson(isr, new TypeToken<List<Item>>() {}.getType());
             // Parse the JSON to ItemsWrapper
-            ItemsWrapper itemsWrapper = gson.fromJson(isr, ItemsWrapper.class);
+            // ItemsWrapper itemsWrapper = gson.fromJson(isr, ItemsWrapper.class);
 
-            Map<String, Item> itemsMap = new HashMap<>();
-            for (Item item : itemsWrapper.getItems()) {
-                itemsMap.put(item.getName().toLowerCase(), item);
-            }
+            //            Map<String, Item> itemsMap = new HashMap<>();
+//            for (Item item : itemsWrapper.getItems()) {
+//                itemsMap.put(item.getName().toLowerCase(), item);
+//            }
 
-            return itemsMap;
+            return itemsList.stream()
+                    .collect(Collectors.toMap(Item::getName, Function.identity()));
         } catch (IOException e) {
             e.printStackTrace();
             return Collections.emptyMap();

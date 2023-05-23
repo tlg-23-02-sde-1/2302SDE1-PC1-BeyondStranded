@@ -35,7 +35,7 @@ class Parser {
     }
 
     public static List<String> wordList(String input) {
-        String delims = "[\t ,.:;?!\"']+";
+        String delims = "\\W+";
         List<String> strlist = new ArrayList<>();
         String[] words = input.split(delims);
         strlist.addAll(Arrays.asList(words));

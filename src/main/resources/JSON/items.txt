@@ -1,5 +1,4 @@
-{
-  "items": [
+[
     {
       "name": "Radio",
       "description": "A battered but still functional radio. Might be useful for calling for help.",
@@ -70,5 +69,4 @@
       "type": "Puzzle",
       "use": "Use this to help you navigate the island."
     }
-  ]
-}
+]

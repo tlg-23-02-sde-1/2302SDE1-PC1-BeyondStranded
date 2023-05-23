@@ -1,11 +1,14 @@
 package com.beyondstranded;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Item {
     //fields
     private String use;
     private String name;
     private String description;
     private String location;
+    @SerializedName("type")
     Types types;
 
     //ctors
