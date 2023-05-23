@@ -8,8 +8,7 @@ import java.util.Map;
 import java.util.Random;
 
 class Command {
-    private List<String> commands;
-    private final Map<String, Item> itemsMap = Controller.loadItemsIntoMap();
+    private final Map<String, Item> itemsMap = Controller.parseItemsFromFile();
     private final Prompter prompter;
 
     public Command(Prompter prompter) {
@@ -20,7 +19,7 @@ class Command {
 
     }
 
-    Player goCommand(List<String> command, Player player, List<Location> allLocations) {
+    Player goCommand(List<String> command, Player player, Map<String, Location> allLocations) {
         // Get the map of directions from the current location
         Map<String, String> directions = player.getLocation().getDirections();
 
@@ -53,16 +52,10 @@ class Command {
         }
     }
 
-    void talkCommand(List<String> command, Player player, NPCWrapper npcWrapper) {
+    void talkCommand(List<String> command, Player player, Map<String, NPC> MapOfNPC) {
         Random rand = new Random();
-        NPC roomNPC = null;
-        for (NPC npc : npcWrapper.getNpc()) {
-            if (command.get(1).equalsIgnoreCase(npc.getName()) &&
-                    player.getLocation().getName().equalsIgnoreCase(npc.getLocation())) {
-                roomNPC = npc;
-            }
-        }
-        if (roomNPC != null) {
+        NPC roomNPC = MapOfNPC.get(command.get(1).toLowerCase());
+        if (roomNPC != null && roomNPC.getLocation().equals(player.getLocation().getName())) {
             List<String> npcDialogue = roomNPC.getDialogue();
             String randomDialogue = npcDialogue.get(rand.nextInt(npcDialogue.size()));
             System.out.println(randomDialogue);
