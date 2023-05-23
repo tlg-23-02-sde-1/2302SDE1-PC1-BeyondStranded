@@ -137,7 +137,12 @@ public class Controller {
         return roomNPC;
     }
 
-    List<Location> parseLocationsFromFile() {
+    /**
+     * Parses locations from a file and returns a list of Location objects.
+     *
+     * @return List of Location objects parsed from the file.
+     */
+        List<Location> parseLocationsFromFile() {
         Gson gson = new Gson();
 
         try (InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/JSON/locations.txt"))) {
@@ -151,6 +156,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Parses items from a file and returns a list of Item objects.
+     *
+     * @return List of Item objects parsed from the file.
+     */
     List<Item> parseItemsFromFile() {
         Gson gson = new Gson();
 
