@@ -1,15 +1,19 @@
 package com.beyondstranded.app;
 
-import com.beyondstranded.Item;
-import com.beyondstranded.Location;
-import com.beyondstranded.Player;
+import com.beyondstranded.*;
+import com.util.apps.Prompter;
 
 import java.util.List;
 import java.util.Map;
 
-class Commands {
+class Command {
     private List<String> commands;
     private final Map<String, Item> itemsMap = Controller.loadItemsIntoMap();
+    private final Prompter prompter;
+
+    public Command(Prompter prompter) {
+        this.prompter = prompter;
+    }
 
     void commandCheck(List<String> command) {
 
@@ -48,11 +52,28 @@ class Commands {
         }
     }
 
+    void talkCommand(List<String> command, Player player, NPCWrapper npcWrapper) {
+        NPC roomNPC = null;
+        for (NPC npc : npcWrapper.getNpc()) {
+            if (command.get(1).equalsIgnoreCase(npc.getName()) &&
+                    player.getLocation().getName().equalsIgnoreCase(npc.getLocation())) {
+                roomNPC = npc;
+            }
+        }
+        if (roomNPC != null) {
+            System.out.println(roomNPC.getDescription());
+        }
+        else {
+            System.out.printf("\nThere is no %s located here.\n", command.get(1));
+        }
+    }
+
     void getCommand(List<String> command, Player player) {
 
     }
 
-    void helpCommand(List<String> command, Player player) {
-
+    void helpCommand() {
+        Introduction intro = new Introduction(prompter);
+        intro.showHelp();
     }
 }
