@@ -1,23 +1,25 @@
 package com.beyondstranded;
 
+import java.util.List;
+
 public class NPC {
     //fields
-    private String name;
-    private String description;
-    private String location;
-    private String type;
+    private final String name;
+    private final List<String> dialogue;
+    private final String location;
+    private final String type;
 
     //ctors
-    public NPC(String name, String description, String location, String type) {
+    public NPC(String name, List<String> dialogue, String location, String type) {
         this.name = name;
-        this.description = description;
+        this.dialogue = dialogue;
         this.location = location;
         this.type = type;
     }
 
     //accessor get/set/toString
-    public String getDescription() {
-        return description;
+    public List<String> getDialogue() {
+        return dialogue;
     }
 
     public String getName() {
@@ -32,15 +34,9 @@ public class NPC {
     public String toString() {
         return "NPC{" +
                 "name='" + name + '\'' +
-                ", description='" + description + '\'' +
+                ", dialogue='" + dialogue + '\'' +
                 ", location='" + location + '\'' +
                 ", type='" + type + '\'' +
                 '}';
     }
-
-//method
-    //business
-    //helper
-//inner class
-
 }

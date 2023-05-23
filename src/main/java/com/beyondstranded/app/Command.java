@@ -5,6 +5,7 @@ import com.util.apps.Prompter;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 class Command {
     private List<String> commands;
@@ -53,6 +54,7 @@ class Command {
     }
 
     void talkCommand(List<String> command, Player player, NPCWrapper npcWrapper) {
+        Random rand = new Random();
         NPC roomNPC = null;
         for (NPC npc : npcWrapper.getNpc()) {
             if (command.get(1).equalsIgnoreCase(npc.getName()) &&
@@ -61,7 +63,9 @@ class Command {
             }
         }
         if (roomNPC != null) {
-            System.out.println(roomNPC.getDescription());
+            List<String> npcDialogue = roomNPC.getDialogue();
+            String randomDialogue = npcDialogue.get(rand.nextInt(npcDialogue.size()));
+            System.out.println(randomDialogue);
         }
         else {
             System.out.printf("\nThere is no %s located here.\n", command.get(1));
