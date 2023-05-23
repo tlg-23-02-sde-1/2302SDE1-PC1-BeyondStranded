@@ -7,7 +7,6 @@ import com.util.apps.Prompter;
 import java.io.*;
 import java.util.*;
 
-import static com.beyondstranded.app.Introduction.readResource;
 import static com.util.apps.Console.clear;
 
 public class Controller {
@@ -16,10 +15,9 @@ public class Controller {
     private final Prompter prompter = new Prompter(new Scanner(System.in));
     private final Parser parser = new Parser();
     private final Introduction intro = new Introduction(prompter);
-    private final Commands commands = new Commands();
+    private final Command commands = new Command(prompter);
     private final int maxHealth = 50;
     private Player player;
-
 
     // business methods
     public void start() {
@@ -32,15 +30,6 @@ public class Controller {
         intro.showCoreStory();
         gameStarted();
         intro.gameOver();
-    }
-
-    private void displayHelp() {
-        try {
-            String helpText = readResource("/images/help.txt");
-            intro.showHelp(helpText);
-        } catch (IOException e) {
-            System.out.println("Unable to display help.");
-        }
     }
 
     private void gameStarted() {
@@ -64,14 +53,14 @@ public class Controller {
                     gameOver = true;
                     break;
                 case "help":
-                    displayHelp();
+                    commands.helpCommand();
                     break;
                 case "look":
                     commands.lookCommand(userInput, player);
                     break;
                 case "talk":
-                    // Create method to talk in Commands
-                    System.out.println(loadNPC().getDescription());
+                    commands.talkCommand(userInput, player, loadNPC());
+                    break;
             }
         }
     }
@@ -94,7 +83,7 @@ public class Controller {
         Location currentLocation = null;
         for (Location location : allLocations) {
             if (location.getName().equals(locationName)) {
-                return currentLocation = location;
+                currentLocation = location;
             }
         }
         return currentLocation;
@@ -119,22 +108,18 @@ public class Controller {
         }
     }
 
-    NPC loadNPC() {
+    static NPCWrapper loadNPC() {
         Gson gson = new Gson();
-        NPC roomNPC = null;
+        NPCWrapper npcWrapper = null;
 
-        try (InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/JSON/npc.txt"))) {
-            // Parse the JSON to ItemsWrapper
-            NPCWrapper npcWrapper = gson.fromJson(isr, NPCWrapper.class);
-            for (NPC npc : npcWrapper.getNpc()) {
-                if (player.getLocation().getName().equals(npc.getLocation())) {
-                    roomNPC = npc;
-                }
-            }
+        try (InputStreamReader isr = new InputStreamReader(Controller.class.getResourceAsStream("/JSON/npc.txt"))) {
+            // Parse the JSON to NPCWrapper
+            npcWrapper = gson.fromJson(isr, NPCWrapper.class);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return roomNPC;
+        return npcWrapper;
     }
 
     List<Location> parseLocationsFromFile() {

@@ -53,9 +53,7 @@ class Introduction {
         prompter.prompt("\n\t\t\tPress Enter to Continue:","","\t\t\tInvalid input. Only press Enter in your keyboard.\n");
     }
 
-    void showHelp(String prompt){
-        clear();
-        blankLines(1);
+    void showHelp(){
         showcasePrompt(help);
     }
 
@@ -68,7 +66,7 @@ class Introduction {
             welcome = readResource("/images/Welcome Prompt.txt");
             winCondition = readResource("/images/Win Condition Prompt.txt");
             lossCondition = readResource("/images/Loss Condition Prompt.txt");
-            help = readResource("/images/help.txt");
+            help = readResource("/images/Help.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
