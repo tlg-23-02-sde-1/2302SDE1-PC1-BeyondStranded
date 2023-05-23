@@ -19,6 +19,7 @@ class Introduction {
     private static String winCondition;
     private static String lossCondition;
     private static String help;
+    private static String mapStart;
 
 
     private final Prompter prompter;
@@ -57,6 +58,13 @@ class Introduction {
         showcasePrompt(help);
     }
 
+    //Initial starting map
+    void showMap() {
+        clear();
+        blankLines(1);
+        showcasePrompt(mapStart);
+    }
+
     static {
         try {
             banner = readResource("/ASCII_Art/Banner.txt");
@@ -67,6 +75,7 @@ class Introduction {
             winCondition = readResource("/images/Win Condition Prompt.txt");
             lossCondition = readResource("/images/Loss Condition Prompt.txt");
             help = readResource("/images/Help.txt");
+            mapStart = readResource("/ASCII_Art/MapStart.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
