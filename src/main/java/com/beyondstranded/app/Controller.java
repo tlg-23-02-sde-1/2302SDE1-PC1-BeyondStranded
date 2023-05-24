@@ -12,6 +12,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.util.apps.Console.clear;
+import static com.util.apps.Console.pause;
 
 public class Controller {
 
@@ -40,7 +41,7 @@ public class Controller {
         boolean gameOver = false;
         Map<String, Location> allLocation;
         allLocation = parseLocationsFromFile();
-        List<String> items = new ArrayList<>();
+        List<Item> items = new ArrayList<>();
         player = new Player(getLocationInfo("Awakening", allLocation),maxHealth, items);
         List<String> userInput;
 
@@ -65,9 +66,9 @@ public class Controller {
                 case "talk":
                     commands.talkCommand(userInput, player, parseNpcsFromFile());
                     break;
-                case "get":
-                    commands.getCommand(userInput, player);
             }
+            //pause(2_500);
+            prompter.prompt("\nPress Enter to Continue:","","Invalid input. Only press Enter in your keyboard.\n");
         }
     }
 
@@ -79,7 +80,10 @@ public class Controller {
         for (String sentence : description) {
             System.out.println(sentence.trim());
         }
-        System.out.println("\nWhat is located here: " + currentLocation.getItems());
+        System.out.println(currentLocation.getNpc());
+        if (!currentLocation.getNpc().isEmpty()) {
+            System.out.println("\nNPC located here: " + currentLocation.getNpc().toString());
+        }
     }
 
     static Location getLocationInfo(String locationName, Map<String, Location> allLocations) {
@@ -127,11 +131,11 @@ public class Controller {
      *
      * @return List of Location objects parsed from the file.
      */
-    static Map<String, Location> parseLocationsFromFile() {
+    Map<String, Location> parseLocationsFromFile() {
         Gson gson = new Gson();
 
         //noinspection ConstantConditions
-        try (InputStreamReader isr = new InputStreamReader(Controller.class.getResourceAsStream("/JSON/locations.txt"))) {
+        try (InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/JSON/locations.txt"))) {
             // Parse the JSON to LocationsWrapper
             List<Location> locationList = gson.fromJson(isr, new TypeToken<List<Location>>() {}.getType());
 

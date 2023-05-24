@@ -8,12 +8,14 @@ public class Location {
     private Map<String, String> directions;
     private String description;
     private List<String> items;
+    private List<String> npc;
 
-    public Location(String name, Map<String, String> directions, String description, List<String> items) {
+    public Location(String name, Map<String, String> directions, String description, List<String> items, List<String> npc) {
         this.name = name;
         this.directions = directions;
         this.description = description;
         this.items = items;
+        this.npc = npc;
     }
 
     public String getName() {
@@ -38,6 +40,14 @@ public class Location {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<String> getNpc() {
+        return npc;
+    }
+
+    public void setNpc(List<String> npc) {
+        this.npc = npc;
     }
 
     public List<String> getItems() {
@@ -65,6 +75,7 @@ public class Location {
                 ", directions=" + directions +
                 ", description='" + description + '\'' +
                 ", items=" + items +
+                ", npc=" + npc +
                 '}';
     }
 }
