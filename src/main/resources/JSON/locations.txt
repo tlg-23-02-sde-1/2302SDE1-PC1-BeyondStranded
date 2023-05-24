@@ -20,7 +20,7 @@
       },
       "description": "The mangled wreckage of the helicopter smolders before you, the smoke rising into the sky. The path from where you came lies to the south. To the west, you see an intimidating volcano.",
       "puzzle": false,
-      "items": ["radio", "first aid kit"],
+      "items": ["radio", "bandages"],
       "npc": []
     },
     {

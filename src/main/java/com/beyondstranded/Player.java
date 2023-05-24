@@ -7,7 +7,7 @@ public class Player {
 //    String name;
     Location location;
     int health;
-    List<Item> inventory;
+    List<String> inventory;
 
 /*    public Player(String name, Location location, int health, Inventory inventory) {
         this.name = name;
@@ -16,7 +16,7 @@ public class Player {
         this.inventory = inventory;
     }*/
 
-    public Player(Location location, int health, List<Item> inventory) {
+    public Player(Location location, int health, List<String> inventory) {
         this.location = location;
         this.health = health;
         this.inventory = inventory;
@@ -48,20 +48,23 @@ public class Player {
         this.health = health;
     }
 
-    public List<Item> getInventory() {
+    public void getItem() {
+    }
+
+    public List<String> getInventory() {
         return inventory;
     }
 
-    public void setInventory(List<Item> inventory) {
-        this.inventory = inventory;
+    public void addItemToInventory(String item){
+        getInventory().add(item);
     }
 
-    //fields
-//ctors
-//method
-    //business
-    //accessor get/set/toString
-    //helper
-//inner class
+    public void removeItemFromInventory(Item item){
+        getInventory().remove(item);
+    }
+
+    public void setInventory(List<String> inventory) {
+        this.inventory = inventory;
+    }
 
 }

@@ -11,6 +11,7 @@ import java.util.Random;
 class Command {
     private final Map<String, Item> itemsMap = Controller.parseItemsFromFile();
     private final Prompter prompter;
+    // private Map<String, Location> currentRoomLocation = Controller.parseLocationsFromFile();
 
     public Command(Prompter prompter) {
         this.prompter = prompter;
@@ -66,8 +67,27 @@ class Command {
         }
     }
 
-    void getCommand(List<String> command, Player player) {
-
+    Map<String,Location> getCommand(List<String> command, Player player, Map<String, Location> currentRoomLocation) {
+        Location currentLocation = currentRoomLocation.get(player.getLocation().getName());
+        Map<String, Item> itemMap = Controller.parseItemsFromFile();
+        int index = 0;
+        List<String> currentItemsInLocation = currentLocation.getItems();
+        if (currentItemsInLocation.contains(command.get(1))) {
+            Item userItem = itemMap.get(command.get(1));
+            player.addItemToInventory(userItem.getName());
+            for (int i = 0; i < currentItemsInLocation.size(); i++) {
+                if (currentItemsInLocation.get(i).equalsIgnoreCase(command.get(1))) {
+                    index = i;
+                }
+            }
+            currentItemsInLocation.remove(index);
+            currentLocation.setItems(currentItemsInLocation);
+        }
+        else {
+            System.out.println("There is no " + command.get(1) + " in the location.");
+        }
+        currentRoomLocation.put(player.getLocation().getName(),currentLocation);
+        return currentRoomLocation;
     }
 
     void showMapCommand(Location player) {
