@@ -18,6 +18,9 @@ public class Location {
         this.npc = npc;
     }
 
+    public Location(String current_location) {
+    }
+
     public String getName() {
         return name;
     }

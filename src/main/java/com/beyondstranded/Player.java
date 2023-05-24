@@ -22,6 +22,10 @@ public class Player {
         this.inventory = inventory;
     }
 
+    public Player() {
+
+    }
+
 /*    public Location moveTo(Location currentLocation) {
         Location location = new Location(currentLocation);
         return location;

@@ -3,10 +3,14 @@ package com.util.apps;
 import java.util.Scanner;
 
 public class Prompter {
-    private final Scanner scanner;
+    private Scanner scanner;
 
     public Prompter(Scanner var1) {
         this.scanner = var1;
+    }
+
+    public Prompter() {
+
     }
 
     public String info(String var1) {
