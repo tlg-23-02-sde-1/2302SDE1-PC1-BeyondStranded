@@ -32,9 +32,9 @@ public class Controller {
     }
 
     private void startGame() {
-        //intro.showTitlePage();
-        //intro.gameOption();
-        //intro.showCoreStory();
+        intro.showTitlePage();
+        intro.gameOption();
+        intro.showCoreStory();
         gameStarted();
         intro.gameOver();
     }
@@ -78,7 +78,6 @@ public class Controller {
                     allLocation = commands.dropCommand(userInput, player, allLocation);
                     break;
             }
-            //pause(2_500);
             prompter.prompt("\nPress Enter to Continue:","","Invalid input. Only press Enter in your keyboard.\n");
         }
     }

@@ -18,9 +18,7 @@ class Introduction {
     private static String story;
     private static String winCondition;
     private static String lossCondition;
-    private static String help;
     private static String gameOver;
-    private static String mapStart;
 
 
     private final Prompter prompter;
@@ -61,17 +59,6 @@ class Introduction {
         prompter.prompt("\n\t\t\tPress Enter to Continue:","","\t\t\tInvalid input. Only press Enter in your keyboard.\n");
     }
 
-    void showHelp(){
-        showcasePrompt(help);
-    }
-
-    //Initial starting map
-    void showMap() {
-        clear();
-        blankLines(1);
-        showcasePrompt(mapStart);
-    }
-
     static {
         try {
             banner = readResource("/ASCII_Art/Banner.txt");
@@ -81,13 +68,7 @@ class Introduction {
             welcome = readResource("/images/Welcome Prompt.txt");
             winCondition = readResource("/images/Win Condition Prompt.txt");
             lossCondition = readResource("/images/Loss Condition Prompt.txt");
-            help = readResource("/images/Help.txt");
-
-            mapStart = readResource("/ASCII_Art/MapAwakening.txt");
-
             gameOver = readResource("/images/Game Over.txt");
-            
-
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -53,7 +53,7 @@
       "description": "The jungle closes in around you, its dense foliage making progress slow. The giant tree can be seen to the west, while a thin trail of smoke suggests a village to the south.",
       "puzzle": false,
       "items": [],
-      "npc": ["chief", "healer"]
+      "npc": []
     },
     {
       "name": "Village",
@@ -63,7 +63,7 @@
       "description": "A small tribal village appears, nestled in a clearing. The jungle from where you came is visible to the north.",
       "puzzle": false,
       "items": [],
-      "npc": []
+      "npc": ["chief", "healer"]
     },
     {
       "name": "Waterfall",
