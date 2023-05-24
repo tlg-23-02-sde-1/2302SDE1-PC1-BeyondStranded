@@ -66,6 +66,9 @@ public class Controller {
                 case "talk":
                     commands.talkCommand(userInput, player, parseNpcsFromFile());
                     break;
+                case "show":
+                    intro.showMap();
+                    break;
             }
             //pause(2_500);
             prompter.prompt("\nPress Enter to Continue:","","Invalid input. Only press Enter in your keyboard.\n");

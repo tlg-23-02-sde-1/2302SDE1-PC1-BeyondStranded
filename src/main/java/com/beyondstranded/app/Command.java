@@ -69,6 +69,11 @@ class Command {
 
     }
 
+    void showMapCommand(List<String> command, Player player) {
+        Location currentLocation = player.getLocation();
+
+    }
+
     void helpCommand() {
         Introduction intro = new Introduction(prompter);
         intro.showHelp();
