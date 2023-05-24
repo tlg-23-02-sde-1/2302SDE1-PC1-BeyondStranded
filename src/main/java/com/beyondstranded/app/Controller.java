@@ -64,6 +64,9 @@ public class Controller {
                 case "talk":
                     commands.talkCommand(userInput, player, loadNPC());
                     break;
+                case "show":
+                    intro.showMap();
+                    break;
             }
         }
     }
