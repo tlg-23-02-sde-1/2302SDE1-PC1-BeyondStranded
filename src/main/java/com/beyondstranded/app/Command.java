@@ -12,7 +12,7 @@ import static com.util.apps.Console.blankLines;
 import static com.util.apps.Console.clear;
 
 class Command {
-    private final Map<String, Item> itemsMap = Controller.parseItemsFromFile();
+    private final Map<String, Item> itemsMap = JsonDataLoader.parseItemsFromFile();
     private final Prompter prompter;
 
     public Command(Prompter prompter) {
@@ -33,7 +33,7 @@ class Command {
             String newLocationName = directions.get(command.get(1));
 
             // Get the Location object corresponding to the new location name
-            Location newLocation = Controller.getLocationInfo(newLocationName, allLocations);
+            Location newLocation = JsonDataLoader.getLocationInfo(newLocationName, allLocations);
 
             // Set the player's location to the new location
             player.setLocation(newLocation);
@@ -64,6 +64,9 @@ class Command {
             String randomDialogue = npcDialogue.get(rand.nextInt(npcDialogue.size()));
             System.out.println("Dialogue of " + roomNPC.getName() + " : " + randomDialogue);
         }
+        else if (roomNPC == null) {
+            System.out.printf("\nYou can't talk to %s here.\n", command.get(1));
+        }
         else {
             System.out.printf("\nThere is no %s located here.\n", command.get(1));
         }
@@ -71,7 +74,7 @@ class Command {
 
     Map<String,Location> getCommand(List<String> command, Player player, Map<String, Location> currentRoomLocation) {
         Location currentLocation = currentRoomLocation.get(player.getLocation().getName());
-        Map<String, Item> itemMap = Controller.parseItemsFromFile();
+        Map<String, Item> itemMap = JsonDataLoader.parseItemsFromFile();
         int index = 0;
         List<String> currentItemsInLocation = currentLocation.getItems();
         if (currentItemsInLocation.contains(command.get(1))) {
@@ -94,7 +97,7 @@ class Command {
 
     Map<String,Location> dropCommand(List<String> command, Player player, Map<String, Location> currentRoomLocation) {
         Location currentLocation = currentRoomLocation.get(player.getLocation().getName());
-        Map<String, Item> itemMap = Controller.parseItemsFromFile();
+        Map<String, Item> itemMap = JsonDataLoader.parseItemsFromFile();
         List<String> currentItemsInLocation = currentLocation.getItems();
         if (!currentItemsInLocation.contains(command.get(1)) && player.getInventory().contains(command.get(1))) {
             Item userItem = itemMap.get(command.get(1));

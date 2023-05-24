@@ -1,18 +1,9 @@
 package com.beyondstranded.app;
 
-import com.beyondstranded.Item;
 import com.beyondstranded.Location;
-import com.beyondstranded.NPC;
 import com.beyondstranded.Player;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.util.apps.Prompter;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static com.util.apps.Console.clear;
 
@@ -42,9 +33,9 @@ public class Controller {
     private void gameStarted() {
         boolean gameOver = false;
         Map<String, Location> allLocation;
-        allLocation = parseLocationsFromFile();
+        allLocation = JsonDataLoader.parseLocationsFromFile();
         List<String> items = new ArrayList<>();
-        player = new Player(getLocationInfo("Awakening", allLocation),maxHealth, items);
+        player = new Player(JsonDataLoader.getLocationInfo("Awakening", allLocation),maxHealth, items);
         List<String> userInput;
 
         while (!gameOver) {
@@ -66,9 +57,9 @@ public class Controller {
                     commands.lookCommand(userInput, player);
                     break;
                 case "talk":
-                    commands.talkCommand(userInput, player, parseNpcsFromFile());
+                    commands.talkCommand(userInput, player, JsonDataLoader.parseNpcsFromFile());
                     break;
-                case "show":
+                case "map":
                     commands.showMapCommand(player.getLocation());
                     break;
                 case "get":
@@ -93,67 +84,6 @@ public class Controller {
         System.out.println("\nItems located here: " + currentLocation.getItems());
         if (!currentLocation.getNpc().isEmpty()) {
             System.out.println("\nNPC located here: " + currentLocation.getNpc().toString());
-        }
-    }
-
-    static Location getLocationInfo(String locationName, Map<String, Location> allLocations) {
-        return allLocations.get(locationName);
-    }
-
-    /**
-     * Parses items from a file and returns a list of Item objects.
-     *
-     * @return List of Item objects parsed from the file.
-     */
-    static Map<String, Item> parseItemsFromFile() {
-        Gson gson = new Gson();
-
-        //noinspection ConstantConditions
-        try (InputStreamReader isr = new InputStreamReader(Controller.class.getResourceAsStream("/JSON/items.txt"))) {
-            List<Item> itemsList = gson.fromJson(isr, new TypeToken<List<Item>>() {}.getType());
-
-            return itemsList.stream()
-                    .collect(Collectors.toMap(Item::getName, Function.identity()));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Collections.emptyMap();
-        }
-    }
-
-    static Map<String, NPC> parseNpcsFromFile() {
-        Gson gson = new Gson();
-
-        //noinspection ConstantConditions
-        try (InputStreamReader isr = new InputStreamReader(Controller.class.getResourceAsStream("/JSON/npc.txt"))) {
-            // Parse the JSON to npc
-            List<NPC> npcList = gson.fromJson(isr, new TypeToken<List<NPC>>() {}.getType());
-
-            return npcList.stream()
-                    .collect(Collectors.toMap(NPC::getName, Function.identity()));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Collections.emptyMap();
-        }
-    }
-
-    /**
-     * Parses locations from a file and returns a list of Location objects.
-     *
-     * @return List of Location objects parsed from the file.
-     */
-    static Map<String, Location> parseLocationsFromFile() {
-        Gson gson = new Gson();
-
-        //noinspection ConstantConditions
-        try (InputStreamReader isr = new InputStreamReader(Controller.class.getResourceAsStream("/JSON/locations.txt"))) {
-            // Parse the JSON to LocationsWrapper
-            List<Location> locationList = gson.fromJson(isr, new TypeToken<List<Location>>() {}.getType());
-
-            return locationList.stream()
-                    .collect(Collectors.toMap(Location::getName, Function.identity()));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Collections.emptyMap();
         }
     }
 }

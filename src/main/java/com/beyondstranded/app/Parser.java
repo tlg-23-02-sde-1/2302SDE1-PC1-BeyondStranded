@@ -10,7 +10,7 @@ class Parser {
         String noun;
         List<String> commands = new ArrayList<>(Arrays.asList("take", "go", "look", "quit", "move", "advance",
                 "travel", "walk", "inspect", "examine", "scan", "watch", "drop", "get", "listen", "build", "steal",
-                "make", "talk", "exit", "show"));
+                "make", "talk", "exit"));
         List<String> objects = new ArrayList<>(Arrays.asList("tree", "head", "jungle", "cave", "radio", "bandages",
                 "torch", "waterfall", "cliff", "village", "shore", "forest", "pool", "north", "south", "east", "west", "sea",
                 "up", "down", "shell", "driftwood", "berries", "eye", "sound", "crash", "helicopter", "peak", "ship",
@@ -62,6 +62,10 @@ class Parser {
             }
             else if(input.equals("help")) {
                 userInput.add(0,"help");
+                break;
+            }
+            else if(input.equals("map")) {
+                userInput.add(0,"map");
                 break;
             }
             else {
