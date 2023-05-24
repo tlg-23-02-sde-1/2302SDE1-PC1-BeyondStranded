@@ -30,9 +30,9 @@ public class Controller {
     }
 
     private void startGame() {
-        intro.showTitlePage();
-        intro.gameOption();
-        intro.showCoreStory();
+        //intro.showTitlePage();
+        //intro.gameOption();
+        //intro.showCoreStory();
         gameStarted();
         intro.gameOver();
     }
@@ -67,7 +67,7 @@ public class Controller {
                     commands.talkCommand(userInput, player, parseNpcsFromFile());
                     break;
                 case "show":
-                    intro.showMap();
+                    commands.showMapCommand(player.getLocation());
                     break;
             }
             //pause(2_500);

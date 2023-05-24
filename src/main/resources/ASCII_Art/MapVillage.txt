@@ -23,11 +23,11 @@
 │                                                              ┌▲┐
 │                                                            ┌▲┐ X you are here
 │                                                             Village
-│                     │ │
-│                     │ │                        ^^^
-│                    │ │ │                    ^^^^^^
-│                    │ │ │Waterfall               ^^^^^^
-│                                             ^^^Rocky Shore
+│ ___  ___                │ │
+│  |    |                │ │                     ^^^
+│  |    |              │ │ |                  ^^^^^^
+│  |    |             │ │ Waterfall               ^^^^^^
+│ Forest Clearing                               ^^^Rocky Shore
 │
 │                      │
 │                      │
