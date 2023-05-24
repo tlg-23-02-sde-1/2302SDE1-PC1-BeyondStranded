@@ -12,6 +12,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.util.apps.Console.clear;
+import static com.util.apps.Console.pause;
 
 public class Controller {
 
@@ -66,6 +67,8 @@ public class Controller {
                     commands.talkCommand(userInput, player, parseNpcsFromFile());
                     break;
             }
+            //pause(2_500);
+            prompter.prompt("\nPress Enter to Continue:","","Invalid input. Only press Enter in your keyboard.\n");
         }
     }
 
@@ -76,6 +79,10 @@ public class Controller {
         String[] description = currentLocation.getDescription().split("\\.");
         for (String sentence : description) {
             System.out.println(sentence.trim());
+        }
+        System.out.println(currentLocation.getNpc());
+        if (!currentLocation.getNpc().isEmpty()) {
+            System.out.println("\nNPC located here: " + currentLocation.getNpc().toString());
         }
     }
 

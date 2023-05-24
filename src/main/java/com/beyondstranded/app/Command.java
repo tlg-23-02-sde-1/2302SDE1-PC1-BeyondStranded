@@ -58,7 +58,7 @@ class Command {
         if (roomNPC != null && roomNPC.getLocation().equals(player.getLocation().getName())) {
             List<String> npcDialogue = roomNPC.getDialogue();
             String randomDialogue = npcDialogue.get(rand.nextInt(npcDialogue.size()));
-            System.out.println(randomDialogue);
+            System.out.println("Dialogue of " + roomNPC.getName() + " : " + randomDialogue);
         }
         else {
             System.out.printf("\nThere is no %s located here.\n", command.get(1));
