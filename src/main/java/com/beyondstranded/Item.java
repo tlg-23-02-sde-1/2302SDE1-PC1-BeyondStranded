@@ -9,7 +9,7 @@ public class Item {
     private String description;
     private String location;
     @SerializedName("type")
-    Types types;
+    Type types;
 
     //ctors
 

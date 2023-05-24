@@ -2,7 +2,7 @@ package com.beyondstranded;
 
 import com.google.gson.annotations.SerializedName;
 
-enum Types {
+enum Type {
     @SerializedName("Puzzle")
     PUZZLE,
     @SerializedName("Healing")
