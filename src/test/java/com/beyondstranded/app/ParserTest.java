@@ -80,4 +80,12 @@ class ParserTest {
         assertEquals(Arrays.asList(input), Parser.userCommand());
     }
 
+    @Test
+    void userCommand_ValidCommand_ReturnsUserInputList() {
+        Parser parser = new Parser();
+        String input = "look tree";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        assertEquals(Arrays.asList(input.split(" ")), Parser.userCommand());
+    }
 }
