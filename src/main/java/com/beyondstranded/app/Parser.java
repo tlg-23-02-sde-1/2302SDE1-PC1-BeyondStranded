@@ -43,7 +43,7 @@ class Parser {
         return strlist;
     }
 
-    public List<String> userCommand() {
+    public static List<String> userCommand() {
         List<String> userInput = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         boolean validInput = false;
