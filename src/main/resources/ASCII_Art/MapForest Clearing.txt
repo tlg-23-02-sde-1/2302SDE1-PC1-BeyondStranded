@@ -28,7 +28,7 @@
 │  |    |              │ │ |                  ^^^^^^
 │  |    |             │ │ Waterfall               ^^^^^^
 │ Forest Clearing          X you are here        ^^^Rocky Shore
-│
+│  X you are here
 │                      │
 │                      │
 │                      ▼

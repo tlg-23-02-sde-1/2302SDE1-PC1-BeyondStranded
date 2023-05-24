@@ -75,7 +75,7 @@ class Introduction {
             winCondition = readResource("/images/Win Condition Prompt.txt");
             lossCondition = readResource("/images/Loss Condition Prompt.txt");
             help = readResource("/images/Help.txt");
-            mapStart = readResource("/ASCII_Art/MapStart.txt");
+            mapStart = readResource("/ASCII_Art/MapAwakening.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }

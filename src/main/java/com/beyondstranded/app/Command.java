@@ -3,6 +3,7 @@ package com.beyondstranded.app;
 import com.beyondstranded.*;
 import com.util.apps.Prompter;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -76,9 +77,15 @@ class Command {
 
     }
 
-    void showMapCommand(List<String> command, Player player) {
-        Location currentLocation = player.getLocation();
-
+    void showMapCommand(Location player) {
+        try {
+            Introduction intro = new Introduction(prompter);
+            String path = "/ASCII_Art/Map" + player.getName() + ".txt";
+            String showMap = Introduction.readResource(path);
+            intro.showcasePrompt(showMap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     void helpCommand() {
