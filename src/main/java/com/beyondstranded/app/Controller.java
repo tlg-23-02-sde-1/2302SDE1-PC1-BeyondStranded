@@ -74,6 +74,9 @@ public class Controller {
                 case "get":
                     allLocation = commands.getCommand(userInput, player, allLocation);
                     break;
+                case "drop":
+                    allLocation = commands.dropCommand(userInput, player, allLocation);
+                    break;
             }
             //pause(2_500);
             prompter.prompt("\nPress Enter to Continue:","","Invalid input. Only press Enter in your keyboard.\n");

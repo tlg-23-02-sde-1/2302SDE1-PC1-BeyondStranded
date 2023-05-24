@@ -90,6 +90,23 @@ class Command {
         return currentRoomLocation;
     }
 
+    Map<String,Location> dropCommand(List<String> command, Player player, Map<String, Location> currentRoomLocation) {
+        Location currentLocation = currentRoomLocation.get(player.getLocation().getName());
+        Map<String, Item> itemMap = Controller.parseItemsFromFile();
+        List<String> currentItemsInLocation = currentLocation.getItems();
+        if (!currentItemsInLocation.contains(command.get(1))) {
+            Item userItem = itemMap.get(command.get(1));
+            player.removeItemFromInventory(userItem.getName());
+            currentItemsInLocation.add(userItem.getName());
+            currentLocation.setItems(currentItemsInLocation);
+        }
+        else {
+            System.out.println("There is no " + command.get(1) + " in the location.");
+        }
+        currentRoomLocation.put(player.getLocation().getName(),currentLocation);
+        return currentRoomLocation;
+    }
+
     void showMapCommand(Location player) {
         try {
             Introduction intro = new Introduction(prompter);

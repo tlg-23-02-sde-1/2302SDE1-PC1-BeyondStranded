@@ -59,7 +59,7 @@ public class Player {
         getInventory().add(item);
     }
 
-    public void removeItemFromInventory(Item item){
+    public void removeItemFromInventory(String item){
         getInventory().remove(item);
     }
 
