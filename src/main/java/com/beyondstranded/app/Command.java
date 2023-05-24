@@ -46,18 +46,6 @@ class Command {
         return player;
     }
 
-//    void lookCommand(List<String> command, Player player) {
-//        List<String> itemNames = player.getLocation().getItems();
-//        for (String itemName : itemNames) {
-//            if (command.get(1).equalsIgnoreCase(itemName)) {
-//                Item item = itemsMap.get(itemName.toLowerCase());
-//                if (item != null) {
-//                    System.out.println(item.getDescription());
-//                }
-//            }
-//        }
-//    }
-
     void lookCommand(List<String> command, Player player, Map<String, Location> allLocations) {
 
         List<String> locationItems = allLocations.get(player.getLocation().getName()).getItems();
