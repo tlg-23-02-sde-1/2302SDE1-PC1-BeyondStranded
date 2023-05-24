@@ -7,10 +7,12 @@ import com.util.apps.Prompter;
 
 import java.io.*;
 import java.util.*;
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.util.apps.Console.clear;
+import static com.util.apps.Console.pause;
 
 public class Controller {
 
@@ -37,7 +39,7 @@ public class Controller {
 
     private void gameStarted() {
         boolean gameOver = false;
-        List<Location> allLocation;
+        Map<String, Location> allLocation;
         allLocation = parseLocationsFromFile();
         List<Item> items = new ArrayList<>();
         player = new Player(getLocationInfo("Awakening", allLocation),maxHealth, items);
@@ -62,52 +64,46 @@ public class Controller {
                     commands.lookCommand(userInput, player);
                     break;
                 case "talk":
-                    commands.talkCommand(userInput, player, loadNPC());
+                    commands.talkCommand(userInput, player, parseNpcsFromFile());
                     break;
                 case "show":
                     commands.showMapCommand(player.getLocation());
                     break;
             }
+            //pause(2_500);
+            prompter.prompt("\nPress Enter to Continue:","","Invalid input. Only press Enter in your keyboard.\n");
         }
     }
 
-    private void printLocationInfo(String locationName, List<Location> allLocations) {
+    private void printLocationInfo(String locationName, Map<String, Location> allLocations) {
         clear();
-        for (Location location : allLocations) {
-            if (location.getName().equals(locationName)) {
-                System.out.printf("Location: %s\n\n", location.getName());
-                String[] description = location.getDescription().split("\\.");
-                for (String sentence : description) {
-                    System.out.println(sentence.trim());
-                }
-                System.out.println("\nWhat is located here: " + location.getItems());
-            }
+        Location currentLocation = allLocations.get(locationName);
+        System.out.printf("Location: %s\n\n", currentLocation.getName());
+        String[] description = currentLocation.getDescription().split("\\.");
+        for (String sentence : description) {
+            System.out.println(sentence.trim());
+        }
+        System.out.println(currentLocation.getNpc());
+        if (!currentLocation.getNpc().isEmpty()) {
+            System.out.println("\nNPC located here: " + currentLocation.getNpc().toString());
         }
     }
 
-    static Location getLocationInfo(String locationName, List<Location> allLocations) {
-        Location currentLocation = null;
-        for (Location location : allLocations) {
-            if (location.getName().equals(locationName)) {
-                currentLocation = location;
-            }
-        }
-        return currentLocation;
+    static Location getLocationInfo(String locationName, Map<String, Location> allLocations) {
+        return allLocations.get(locationName);
     }
 
-    static Map<String, Item> loadItemsIntoMap() {
+    /**
+     * Parses items from a file and returns a list of Item objects.
+     *
+     * @return List of Item objects parsed from the file.
+     */
+    static Map<String, Item> parseItemsFromFile() {
         Gson gson = new Gson();
 
         //noinspection ConstantConditions
         try (InputStreamReader isr = new InputStreamReader(Controller.class.getResourceAsStream("/JSON/items.txt"))) {
             List<Item> itemsList = gson.fromJson(isr, new TypeToken<List<Item>>() {}.getType());
-            // Parse the JSON to ItemsWrapper
-            // ItemsWrapper itemsWrapper = gson.fromJson(isr, ItemsWrapper.class);
-
-            //            Map<String, Item> itemsMap = new HashMap<>();
-//            for (Item item : itemsWrapper.getItems()) {
-//                itemsMap.put(item.getName().toLowerCase(), item);
-//            }
 
             return itemsList.stream()
                     .collect(Collectors.toMap(Item::getName, Function.identity()));
@@ -117,18 +113,20 @@ public class Controller {
         }
     }
 
-    static NPCWrapper loadNPC() {
+    static Map<String, NPC> parseNpcsFromFile() {
         Gson gson = new Gson();
-        NPCWrapper npcWrapper = null;
 
+        //noinspection ConstantConditions
         try (InputStreamReader isr = new InputStreamReader(Controller.class.getResourceAsStream("/JSON/npc.txt"))) {
-            // Parse the JSON to NPCWrapper
-            npcWrapper = gson.fromJson(isr, NPCWrapper.class);
+            // Parse the JSON to npc
+            List<NPC> npcList = gson.fromJson(isr, new TypeToken<List<NPC>>() {}.getType());
 
+            return npcList.stream()
+                    .collect(Collectors.toMap(NPC::getName, Function.identity()));
         } catch (IOException e) {
             e.printStackTrace();
+            return Collections.emptyMap();
         }
-        return npcWrapper;
     }
 
     /**
@@ -136,36 +134,19 @@ public class Controller {
      *
      * @return List of Location objects parsed from the file.
      */
-        List<Location> parseLocationsFromFile() {
+    Map<String, Location> parseLocationsFromFile() {
         Gson gson = new Gson();
 
+        //noinspection ConstantConditions
         try (InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/JSON/locations.txt"))) {
             // Parse the JSON to LocationsWrapper
-            LocationsWrapper locationsWrapper = gson.fromJson(isr, LocationsWrapper.class);
+            List<Location> locationList = gson.fromJson(isr, new TypeToken<List<Location>>() {}.getType());
 
-            return locationsWrapper.getLocations();
+            return locationList.stream()
+                    .collect(Collectors.toMap(Location::getName, Function.identity()));
         } catch (IOException e) {
             e.printStackTrace();
-            return Collections.emptyList();
-        }
-    }
-
-    /**
-     * Parses items from a file and returns a list of Item objects.
-     *
-     * @return List of Item objects parsed from the file.
-     */
-    List<Item> parseItemsFromFile() {
-        Gson gson = new Gson();
-
-        try (InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/JSON/items.txt"))) {
-            // Parse the JSON to LocationsWrapper
-            ItemsWrapper itemsWrapper = gson.fromJson(isr, ItemsWrapper.class);
-
-            return itemsWrapper.getItems();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Collections.emptyList();
+            return Collections.emptyMap();
         }
     }
 }

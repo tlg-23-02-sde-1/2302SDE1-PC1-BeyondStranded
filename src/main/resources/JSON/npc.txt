@@ -1,5 +1,4 @@
-{
-  "npc": [
+[
     {
       "name": "chief",
       "dialogue": [
@@ -30,6 +29,4 @@
       "location": "Cave",
       "type": "Foe"
     }
-  ]
-}
-
+]
