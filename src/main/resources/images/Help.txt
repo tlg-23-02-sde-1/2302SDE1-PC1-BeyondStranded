@@ -9,7 +9,7 @@
 ||          Inspect, Examine, Scan, Watch, Drop, Get, Listen, Build,  ||
 ||          Steal, Make, Talk, Help, Exit.                            ||
 ||                                                                    ||
-||Items: Tree, Head, Jungle, Cave, Radio, FirstAid, Kit, Torch,       ||
+||Items: Tree, Head, Jungle, Cave, Radio, Bandages, Torch,            ||
 ||       Waterfall, Cliff, Village, Shore, Forest, Pool, North,       ||
 ||       South, East, West, Sea, Up, Down, Shell, Driftwood, Eye,     ||
 ||       Berries, Sound, Crash, Helicopter, Peak, Ship, Hull, Help,   ||

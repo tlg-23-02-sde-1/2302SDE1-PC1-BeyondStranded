@@ -1,18 +1,20 @@
 package com.beyondstranded.app;
 
-import com.beyondstranded.*;
-import com.google.gson.*;
+import com.beyondstranded.Item;
+import com.beyondstranded.Location;
+import com.beyondstranded.NPC;
+import com.beyondstranded.Player;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.util.apps.Prompter;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
-import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.util.apps.Console.clear;
-import static com.util.apps.Console.pause;
 
 public class Controller {
 
@@ -30,9 +32,9 @@ public class Controller {
     }
 
     private void startGame() {
-        intro.showTitlePage();
-        intro.gameOption();
-        intro.showCoreStory();
+        //intro.showTitlePage();
+        //intro.gameOption();
+        //intro.showCoreStory();
         gameStarted();
         intro.gameOver();
     }
@@ -41,7 +43,7 @@ public class Controller {
         boolean gameOver = false;
         Map<String, Location> allLocation;
         allLocation = parseLocationsFromFile();
-        List<Item> items = new ArrayList<>();
+        List<String> items = new ArrayList<>();
         player = new Player(getLocationInfo("Awakening", allLocation),maxHealth, items);
         List<String> userInput;
 
@@ -69,6 +71,9 @@ public class Controller {
                 case "show":
                     intro.showMap();
                     break;
+                case "get":
+                    allLocation = commands.getCommand(userInput, player, allLocation);
+                    break;
             }
             //pause(2_500);
             prompter.prompt("\nPress Enter to Continue:","","Invalid input. Only press Enter in your keyboard.\n");
@@ -83,7 +88,7 @@ public class Controller {
         for (String sentence : description) {
             System.out.println(sentence.trim());
         }
-        System.out.println(currentLocation.getNpc());
+        System.out.println("\nItems located here: " + currentLocation.getItems());
         if (!currentLocation.getNpc().isEmpty()) {
             System.out.println("\nNPC located here: " + currentLocation.getNpc().toString());
         }
@@ -134,11 +139,11 @@ public class Controller {
      *
      * @return List of Location objects parsed from the file.
      */
-    Map<String, Location> parseLocationsFromFile() {
+    static Map<String, Location> parseLocationsFromFile() {
         Gson gson = new Gson();
 
         //noinspection ConstantConditions
-        try (InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/JSON/locations.txt"))) {
+        try (InputStreamReader isr = new InputStreamReader(Controller.class.getResourceAsStream("/JSON/locations.txt"))) {
             // Parse the JSON to LocationsWrapper
             List<Location> locationList = gson.fromJson(isr, new TypeToken<List<Location>>() {}.getType());
 

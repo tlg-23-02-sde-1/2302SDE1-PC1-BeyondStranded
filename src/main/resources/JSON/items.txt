@@ -7,7 +7,7 @@
       "use": "Call for Help"
     },
     {
-      "name": "first aid kit",
+      "name": "bandages",
       "description": "A kit containing basic medical supplies. Can be used to heal injuries.",
       "location": "Helicopter Crash",
       "type": "Healing",
