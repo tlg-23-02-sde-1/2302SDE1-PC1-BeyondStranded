@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.util.apps.Console.blankLines;
 import static com.util.apps.Console.clear;
@@ -44,13 +46,33 @@ class Command {
         return player;
     }
 
-    void lookCommand(List<String> command, Player player) {
-        List<String> itemNames = player.getLocation().getItems();
-        for (String itemName : itemNames) {
+//    void lookCommand(List<String> command, Player player) {
+//        List<String> itemNames = player.getLocation().getItems();
+//        for (String itemName : itemNames) {
+//            if (command.get(1).equalsIgnoreCase(itemName)) {
+//                Item item = itemsMap.get(itemName.toLowerCase());
+//                if (item != null) {
+//                    System.out.println(item.getDescription());
+//                }
+//            }
+//        }
+//    }
+
+    void lookCommand(List<String> command, Player player, Map<String, Location> allLocations) {
+
+        List<String> locationItems = allLocations.get(player.getLocation().getName()).getItems();
+        List<String> playerInv = player.getInventory();
+        List<String> mergedList = Stream.concat(locationItems.stream(), playerInv.stream())
+                .collect(Collectors.toList());
+
+        for (String itemName : mergedList) {
             if (command.get(1).equalsIgnoreCase(itemName)) {
                 Item item = itemsMap.get(itemName.toLowerCase());
                 if (item != null) {
                     System.out.println(item.getDescription());
+                }
+                else {
+                    System.out.println("There is no " + command.get(1) + " to look at.");
                 }
             }
         }
