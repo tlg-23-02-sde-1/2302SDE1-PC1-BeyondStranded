@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import static com.util.apps.Console.blankLines;
+import static com.util.apps.Console.clear;
+
 class Command {
     private final Map<String, Item> itemsMap = Controller.parseItemsFromFile();
     private final Prompter prompter;
-    // private Map<String, Location> currentRoomLocation = Controller.parseLocationsFromFile();
 
     public Command(Prompter prompter) {
         this.prompter = prompter;
@@ -94,14 +96,14 @@ class Command {
         Location currentLocation = currentRoomLocation.get(player.getLocation().getName());
         Map<String, Item> itemMap = Controller.parseItemsFromFile();
         List<String> currentItemsInLocation = currentLocation.getItems();
-        if (!currentItemsInLocation.contains(command.get(1))) {
+        if (!currentItemsInLocation.contains(command.get(1)) && player.getInventory().contains(command.get(1))) {
             Item userItem = itemMap.get(command.get(1));
             player.removeItemFromInventory(userItem.getName());
             currentItemsInLocation.add(userItem.getName());
             currentLocation.setItems(currentItemsInLocation);
         }
         else {
-            System.out.println("There is no " + command.get(1) + " in the location.");
+            System.out.println("There is no " + command.get(1) + " in your inventory to drop.");
         }
         currentRoomLocation.put(player.getLocation().getName(),currentLocation);
         return currentRoomLocation;
@@ -109,17 +111,22 @@ class Command {
 
     void showMapCommand(Location player) {
         try {
-            Introduction intro = new Introduction(prompter);
+            clear();
             String path = "/ASCII_Art/Map" + player.getName() + ".txt";
             String showMap = Introduction.readResource(path);
-            intro.showcasePrompt(showMap);
+            System.out.println(showMap);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     void helpCommand() {
-        Introduction intro = new Introduction(prompter);
-        intro.showHelp();
+        try {
+            clear();
+            blankLines(1);
+            System.out.println(Introduction.readResource("/images/Help.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
