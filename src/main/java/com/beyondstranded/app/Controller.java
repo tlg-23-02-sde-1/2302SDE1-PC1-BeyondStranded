@@ -54,7 +54,7 @@ public class Controller {
                     commands.helpCommand();
                     break;
                 case "look":
-                    commands.lookCommand(userInput, player);
+                    commands.lookCommand(userInput, player, allLocation);
                     break;
                 case "talk":
                     commands.talkCommand(userInput, player, JsonDataLoader.parseNpcsFromFile());
