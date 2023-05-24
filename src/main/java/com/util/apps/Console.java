@@ -20,11 +20,20 @@ public class Console {
     }
 
     public static void clear() {
-        ProcessBuilder var0 = os.contains("windows") ? new ProcessBuilder(new String[]{"cmd", "/c", "cls"}) : new ProcessBuilder(new String[]{"clear"});
+        ProcessBuilder var0;
+        if(os.contains("windows")) {
+            var0 = new ProcessBuilder("cmd", "/c", "cls");
+        } else if(os.contains("mac")) {
+            var0 = new ProcessBuilder("/bin/bash", "-c", "printf '\\033c'");
+        }
+        else {
+            var0 = new ProcessBuilder("clear");
+        }
 
         try {
             var0.inheritIO().start().waitFor();
         } catch (InterruptedException var2) {
+            var2.printStackTrace();
         } catch (IOException var3) {
             var3.printStackTrace();
         }
@@ -34,6 +43,7 @@ public class Console {
         try {
             Thread.sleep(var0);
         } catch (InterruptedException var3) {
+            var3.printStackTrace();
         }
     }
 }

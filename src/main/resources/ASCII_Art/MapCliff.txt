@@ -1,0 +1,41 @@
+│                                                                     N
+│                     ┬ Crash Site                                    │
+│                    (^)─►                                       W  ──┼──► E
+│                     ┴                                               │
+│                                                                     ▼
+│                                                                     S
+│                                              TTT Dense Jungle
+│                                            TT  TTT TTTTT    TTTTTT
+│   X you are here                     T  TT TTTT  T  TTTTT TTT  T T    T
+│ Cliff  ┌────                           TT TTT TTT TTT TTTT T TTTT TTTTTTTTTTT
+│    ┌──             Awakening              TTTT  TT TTTT  TTTT TTTTT  TT T  TT
+│    │            (Starting Area)            TTTT TTTTTTT  TT TTTT TTTT  T  TT TT
+│    │                                      TT  TTTTTTT T  TT     TTT T T T T  T
+│    │                                     TT  TT T  T  TTTT  TT TTT TT TTTTTT  T
+│    │                                     T T TTTT    TTT     TT  TTT TT TTTTTT
+│    │                                            TTT TT   TTTTT    T TT  TT
+│    │               ┌──┐                          TTT      TTTT TTT   TTTT
+│  ┌─                │@@@│                                  TT  TTTTTT TTT
+│ ┌┘                 │@@@│ Cave                              TTTT
+├┘
+├                                                              ┌▲┐
+│                                                         ┌▲┐
+│                                                              ┌▲┐
+│                                                            ┌▲┐
+│                                                             Village
+│ ___  ___                │ │
+│  |    |                │ │                     ^^^
+│  |    |              │ │ |                  ^^^^^^
+│  |    |             │ │ Waterfall               ^^^^^^
+│ Forest Clearing                               ^^^Rocky Shore
+│
+│                      │
+│                      │
+│                      ▼
+│
+│                    ┌──────
+│                    │         │      Shipwreck
+│                    │ Cove    │     ─┐   ┌─
+│                    └──────       └──┘
+│
+└──────────────────────────────────────────────────────

@@ -8,12 +8,17 @@ public class Location {
     private Map<String, String> directions;
     private String description;
     private List<String> items;
+    private List<String> npc;
 
-    public Location(String name, Map<String, String> directions, String description, List<String> items) {
+    public Location(String name, Map<String, String> directions, String description, List<String> items, List<String> npc) {
         this.name = name;
         this.directions = directions;
         this.description = description;
         this.items = items;
+        this.npc = npc;
+    }
+
+    public Location(String current_location) {
     }
 
     public String getName() {
@@ -40,6 +45,14 @@ public class Location {
         this.description = description;
     }
 
+    public List<String> getNpc() {
+        return npc;
+    }
+
+    public void setNpc(List<String> npc) {
+        this.npc = npc;
+    }
+
     public List<String> getItems() {
         return items;
     }
@@ -48,6 +61,16 @@ public class Location {
         this.items = items;
     }
 
+//    public Item getItemByName(String itemName) {
+//        for (Item item : items){
+//            if(item.getName().equalsIgnoreCase(itemName)){
+//                return item;
+//            }
+//        }
+//        // If item not found
+//        return null;
+//    }
+
     @Override
     public String toString() {
         return "Location{" +
@@ -55,6 +78,7 @@ public class Location {
                 ", directions=" + directions +
                 ", description='" + description + '\'' +
                 ", items=" + items +
+                ", npc=" + npc +
                 '}';
     }
 }

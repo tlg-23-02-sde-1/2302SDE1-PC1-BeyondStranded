@@ -1,11 +1,13 @@
 package com.beyondstranded;
 
+import java.util.List;
+
 public class Player {
 
 //    String name;
     Location location;
-//    int health;
-//    Inventory inventory;
+    int health;
+    List<String> inventory;
 
 /*    public Player(String name, Location location, int health, Inventory inventory) {
         this.name = name;
@@ -14,8 +16,14 @@ public class Player {
         this.inventory = inventory;
     }*/
 
-    public Player(Location location) {
+    public Player(Location location, int health, List<String> inventory) {
         this.location = location;
+        this.health = health;
+        this.inventory = inventory;
+    }
+
+    public Player() {
+
     }
 
 /*    public Location moveTo(Location currentLocation) {
@@ -23,10 +31,10 @@ public class Player {
         return location;
     }*/
 
-    public Inventory getItems(Location currentLocation, Inventory currentInventory, String input) {
+/*    public Inventory getItems(Location currentLocation, Inventory currentInventory, String input) {
         Inventory inventory = new Inventory();
         return inventory;
-    }
+    }*/
 
     public Location getLocation() {
         return location;
@@ -36,12 +44,31 @@ public class Player {
         this.location = location;
     }
 
-//fields
-//ctors
-//method
-    //business
-    //accessor get/set/toString
-    //helper
-//inner class
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void getItem() {
+    }
+
+    public List<String> getInventory() {
+        return inventory;
+    }
+
+    public void addItemToInventory(String item){
+        getInventory().add(item);
+    }
+
+    public void removeItemFromInventory(String item){
+        getInventory().remove(item);
+    }
+
+    public void setInventory(List<String> inventory) {
+        this.inventory = inventory;
+    }
 
 }

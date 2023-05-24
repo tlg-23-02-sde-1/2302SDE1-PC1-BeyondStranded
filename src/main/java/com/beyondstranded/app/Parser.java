@@ -9,11 +9,12 @@ class Parser {
         String verb;
         String noun;
         List<String> commands = new ArrayList<>(Arrays.asList("take", "go", "look", "quit", "move", "advance",
-                "travel", "walk", "inspect", "examine", "scan", "watch", "drop", "get", "listen", "build", "steal", "make", "talk"));
-        List<String> objects = new ArrayList<>(Arrays.asList("tree", "head", "jungle", "cave", "radio", "first aid ",
-                "kit", "torch", "waterfall", "cliff", "village", "shore", "forest", "pool", "north", "south", "east", "west", "sea",
+                "travel", "walk", "inspect", "examine", "scan", "watch", "drop", "get", "listen", "build", "steal",
+                "make", "talk", "exit"));
+        List<String> objects = new ArrayList<>(Arrays.asList("tree", "compass", "head", "jungle", "cave", "radio", "bandages",
+                "torch", "waterfall", "cliff", "village", "shore", "forest", "pool", "north", "south", "east", "west", "sea",
                 "up", "down", "shell", "driftwood", "berries", "eye", "sound", "crash", "helicopter", "peak", "ship",
-                "hull", "help", "bottle", "water", "map", "fire", "tool", "friends", "chief", "healer", "hunter"));
+                "hull", "help", "bottle", "water", "map", "fire", "tool", "rope", "friends", "chief", "healer", "hunter"));
 
         if (wordlist.size() != 2) {
             System.out.println("ERROR: Only 2 word commands allowed!");
@@ -35,14 +36,14 @@ class Parser {
     }
 
     public static List<String> wordList(String input) {
-        String delims = "[\t ,.:;?!\"']+";
+        String delims = "\\W+";
         List<String> strlist = new ArrayList<>();
         String[] words = input.split(delims);
         strlist.addAll(Arrays.asList(words));
         return strlist;
     }
 
-    public List<String> userCommand() {
+    public static List<String> userCommand() {
         List<String> userInput = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         boolean validInput = false;
@@ -58,6 +59,14 @@ class Parser {
             else if(input.equals("")) {
                 System.out.println("Error\n");
                 System.out.printf("\nInvalid Input. Input is empty. Input: %s", input);
+            }
+            else if(input.equals("help")) {
+                userInput.add(0,"help");
+                break;
+            }
+            else if(input.equals("map")) {
+                userInput.add(0,"map");
+                break;
             }
             else {
                 List<String> wl = wordList(input);

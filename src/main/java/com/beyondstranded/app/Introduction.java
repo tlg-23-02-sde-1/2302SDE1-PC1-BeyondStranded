@@ -18,6 +18,7 @@ class Introduction {
     private static String story;
     private static String winCondition;
     private static String lossCondition;
+    private static String gameOver;
 
 
     private final Prompter prompter;
@@ -35,6 +36,12 @@ class Introduction {
         blankLines(1);
         System.out.println(newGame);
         prompter.prompt("\n\t\t\tEnter your command: ","(?i)^new game$","\t\t\tThis is not a valid option\n");
+    }
+
+    void gameOver() {
+        clear();
+        blankLines(1);
+        System.out.println(gameOver);
     }
 
     void showCoreStory() {
@@ -61,12 +68,13 @@ class Introduction {
             welcome = readResource("/images/Welcome Prompt.txt");
             winCondition = readResource("/images/Win Condition Prompt.txt");
             lossCondition = readResource("/images/Loss Condition Prompt.txt");
+            gameOver = readResource("/images/Game Over.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static String readResource(String path) throws IOException {
+    static String readResource(String path) throws IOException {
         try (InputStream is = Introduction.class.getResourceAsStream(path)) {
             if (is == null) {
                 throw new FileNotFoundException("Resource not found: " + path);
