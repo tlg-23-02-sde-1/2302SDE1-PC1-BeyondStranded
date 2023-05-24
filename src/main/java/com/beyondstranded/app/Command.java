@@ -10,6 +10,7 @@ import java.util.Random;
 class Command {
     private final Map<String, Item> itemsMap = Controller.parseItemsFromFile();
     private final Prompter prompter;
+    private Map<String, Location> currentRoomLocation = Controller.parseLocationsFromFile();
 
     public Command(Prompter prompter) {
         this.prompter = prompter;
@@ -66,7 +67,66 @@ class Command {
     }
 
     void getCommand(List<String> command, Player player) {
+//        String itemName = command.get(1);
+//        Location currentLocation = player.getLocation();
+//        List<String> locationItems = currentLocation.getItems();
+        Location currentLocation = currentRoomLocation.get(player.getLocation().getName());
+        Map<String, Item> itemMap = Controller.parseItemsFromFile();
+        int index = 0;
+        List<String> currentItemsInLocation = currentRoomLocation.get(player.getLocation().getName()).getItems();
+        if (currentLocation.getItems().contains(command.get(1))) {
+            Item userItem = itemMap.get(command.get(1));
+            player.addItemToInventory(userItem.getName());
+            for (int i = 0; i < currentItemsInLocation.size(); i++) {
+                if (currentItemsInLocation.get(i).equalsIgnoreCase(command.get(1))) {
+                    index = i;
+                }
+            }
+            currentItemsInLocation.remove(index);
+        }
+        else {
+            System.out.println("There is no " + command.get(1) + " in the location.");
+        }
 
+
+//        //List<String> currentRoomItems = player.getLocation().getItems();
+//        if (allItemsInCurrentLocation.contains(command.get(1))) {
+//            player.addItemToInventory(allItemsInCurrentLocation.);
+//            for (String items : currentRoomLocation.get(player.getLocation().getName()).getItems()) {
+//
+//            }
+//            currentRoomLocation.get(player.getLocation().getName()).getItems().remove()
+//        }
+//        else {
+//            System.out.println("There is no " + command.get(1) + " in the location.");
+//        }
+//
+//        // Check if the item is avaliable in the current location
+//        boolean itemExists = false;
+//        for (String item : locationItems){
+//            if(item.getName().equalsIgnoreCase(itemName)){
+//                itemExists = true;
+//                break;
+//            }
+//        }
+//        if (itemExists){
+//            // Get the item object from the location
+//            Item item = currentLocation.getItemByName(itemName);
+//            if(item ! = null){
+//                // Add the item to the player's inventory
+//                player.addItemToInventory(item);
+//                System.out.println("You picked up " + itemName + ".");
+//                // Remove the item from the location
+//                currentLocation.removeItem(item);
+//            }
+//        }else{
+//            System.out.println("There is no " + itemName + " in the location.");
+//        }
+//        Item item = itemsMap.get(itemName.toLowerCase());
+//        if(item != null){
+//            player.getItem(item);
+//            System.out.println("You have obtained " + item.getName());
+//        }
     }
 
     void helpCommand() {

@@ -48,6 +48,16 @@ public class Location {
         this.items = items;
     }
 
+//    public Item getItemByName(String itemName) {
+//        for (Item item : items){
+//            if(item.getName().equalsIgnoreCase(itemName)){
+//                return item;
+//            }
+//        }
+//        // If item not found
+//        return null;
+//    }
+
     @Override
     public String toString() {
         return "Location{" +

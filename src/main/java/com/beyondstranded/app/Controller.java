@@ -40,7 +40,7 @@ public class Controller {
         boolean gameOver = false;
         Map<String, Location> allLocation;
         allLocation = parseLocationsFromFile();
-        List<Item> items = new ArrayList<>();
+        List<String> items = new ArrayList<>();
         player = new Player(getLocationInfo("Awakening", allLocation),maxHealth, items);
         List<String> userInput;
 
@@ -65,6 +65,8 @@ public class Controller {
                 case "talk":
                     commands.talkCommand(userInput, player, parseNpcsFromFile());
                     break;
+                case "get":
+                    commands.getCommand(userInput, player);
             }
         }
     }
@@ -77,6 +79,7 @@ public class Controller {
         for (String sentence : description) {
             System.out.println(sentence.trim());
         }
+        System.out.println("\nWhat is located here: " + currentLocation.getItems());
     }
 
     static Location getLocationInfo(String locationName, Map<String, Location> allLocations) {
@@ -124,11 +127,11 @@ public class Controller {
      *
      * @return List of Location objects parsed from the file.
      */
-    Map<String, Location> parseLocationsFromFile() {
+    static Map<String, Location> parseLocationsFromFile() {
         Gson gson = new Gson();
 
         //noinspection ConstantConditions
-        try (InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/JSON/locations.txt"))) {
+        try (InputStreamReader isr = new InputStreamReader(Controller.class.getResourceAsStream("/JSON/locations.txt"))) {
             // Parse the JSON to LocationsWrapper
             List<Location> locationList = gson.fromJson(isr, new TypeToken<List<Location>>() {}.getType());
 
