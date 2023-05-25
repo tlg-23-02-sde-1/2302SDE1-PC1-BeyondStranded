@@ -96,7 +96,7 @@
       },
       "description": "You find yourself in a tranquil forest clearing. Sunlight filters through the canopy above, and a bush bursting with ripe berries catches your eye. The sound of the waterfall echoes from the east.",
       "puzzle": true,
-      "items": ["berry bush"],
+      "items": ["berries"],
       "npc": []
      },
      {
@@ -128,7 +128,7 @@
      },
      "description": "You swim out to the shipwreck, the rusted hull of the ship looming ominously. The rocky shore is to the north, and the cove is visible to the west.",
      "puzzle": true,
-     "items": ["map", "compass"],
+     "items": ["compass"],
      "npc": []
      }
 ]

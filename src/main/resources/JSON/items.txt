@@ -42,7 +42,7 @@
       "use": "Crafting"
     },
     {
-      "name": "berry bush",
+      "name": "berries",
       "description": "A bush full of ripe berries. Could be used for sustenance.",
       "location": "Forest Clearing",
       "type": "Food",
@@ -54,13 +54,6 @@
       "location": "Cove",
       "type": "Puzzle",
       "use": "You could use this to carry water or collect samples."
-    },
-    {
-      "name": "map",
-      "description": "A water-damaged map from the shipwreck. Some areas are still legible.",
-      "location": "Ship Wreck",
-      "type": "Puzzle",
-      "use": "This map could help you navigate the island."
     },
     {
       "name": "compass",
