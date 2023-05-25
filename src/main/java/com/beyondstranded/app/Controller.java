@@ -3,7 +3,11 @@ package com.beyondstranded.app;
 import com.beyondstranded.Location;
 import com.beyondstranded.Player;
 import com.util.apps.Prompter;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 import static com.util.apps.Console.clear;
 
@@ -16,6 +20,7 @@ public class Controller {
     private final Command commands = new Command(prompter);
     private final int maxHealth = 50;
     private Player player;
+    private MidiPlayer midiPlayer;
 
     // business methods
     public void start() {
@@ -28,6 +33,7 @@ public class Controller {
         intro.showCoreStory();
         gameStarted();
         intro.gameOver();
+        midiPlayer.playIntro();
     }
 
     private void gameStarted() {

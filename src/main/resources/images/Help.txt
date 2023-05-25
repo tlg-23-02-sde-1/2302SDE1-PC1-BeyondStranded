@@ -16,6 +16,6 @@
 ||       Bottle, Water, Fire, Tool, Compass, Friends, Chief, Healer,  ||
 ||       Hunter.                                                      ||
 ||                                                                    ||
-||  Except for Quit, Help, and Map all inputs will need to use one    ||
-||  word from the Commands list and Items list to execute a command.  ||
+||  Except for Quit, Help, and Map all commands will need to use a    ||
+||  word from the Commands list and one from the Items list.          ||
 ========================================================================
