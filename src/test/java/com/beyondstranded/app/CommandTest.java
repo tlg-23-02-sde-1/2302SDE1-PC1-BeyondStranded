@@ -3,7 +3,10 @@ package com.beyondstranded.app;
 import com.beyondstranded.Location;
 import com.beyondstranded.Player;
 import com.util.apps.Prompter;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -61,7 +64,6 @@ class CommandTest {
         Assertions.assertEquals(player, result, "Player's location should be updated to the new location");
     }
 
-    @Disabled
     @Test
     void testGoCommand_InvalidDirection_ErrorDisplayed() {
         // Create a sample player and location data
