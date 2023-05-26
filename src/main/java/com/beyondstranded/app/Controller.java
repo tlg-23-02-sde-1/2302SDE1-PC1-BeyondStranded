@@ -1,6 +1,8 @@
 package com.beyondstranded.app;
 
+import com.beyondstranded.Combat;
 import com.beyondstranded.Location;
+import com.beyondstranded.NPC;
 import com.beyondstranded.Player;
 import com.util.apps.Prompter;
 
@@ -16,7 +18,7 @@ public class Controller {
     private final Introduction intro = new Introduction(prompter);
     private final Command commands = new Command(prompter);
     private final int maxHealth = 50;
-    private final MidiPlayer midiPlayer = new MidiPlayer();
+   // private final MidiPlayer midiPlayer = new MidiPlayer();
     private Player player;
 
     // business methods
@@ -25,12 +27,12 @@ public class Controller {
     }
 
     private void startGame() {
-        Thread introThread = new Thread(midiPlayer::playIntro);
-        introThread.start();
+       // Thread introThread = new Thread(midiPlayer::playIntro);
+        //introThread.start();
 
-        intro.showTitlePage();
-        intro.gameOption();
-        intro.showCoreStory();
+        //intro.showTitlePage();
+       // intro.gameOption();
+       // intro.showCoreStory();
         gameStarted();
         intro.gameOver();
     }
@@ -48,7 +50,7 @@ public class Controller {
         List<String> userInput;
 
         while (!gameOver) {
-            midiPlayer.playGamePlay();
+           // midiPlayer.playGamePlay();
             printLocationInfo(player.getLocation().getName(), allLocation);
             System.out.println("\nPlayer Health: " + player.getHealth());
             System.out.println("\nPlayer Inventory: " + player.getInventory());
@@ -80,7 +82,14 @@ public class Controller {
                     break;
             }
             prompter.prompt("\nPress Enter to Continue:","","Invalid input. Only press Enter in your keyboard.\n");
+            // Check if the player is in the cave and start combat if necessary
+            if (player.getLocation().getName().equals("Cave")) {
+                NPC npc = new NPC("Hunter", Collections.singletonList("I don't trust strangers easily."), "cave", "foe") ; // Replace "Hunter"
+                Combat combat = new Combat(player, npc);
+                combat.startCombat();
+            }
         }
+
     }
 
     private void printLocationInfo(String locationName, Map<String, Location> allLocations) {

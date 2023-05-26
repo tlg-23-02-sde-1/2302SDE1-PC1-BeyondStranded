@@ -81,4 +81,8 @@ public class Player {
     public void setInventory(List<String> inventory) {
         this.inventory = inventory;
     }
+
+    public void decreaseHealth(int damage) {
+        health -= damage;
+    }
 }

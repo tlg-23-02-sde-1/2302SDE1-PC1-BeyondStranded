@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 
 import static com.util.apps.Console.*;
 
-class Introduction {
+public class Introduction {
 
     private static String banner;
     private static String objective;

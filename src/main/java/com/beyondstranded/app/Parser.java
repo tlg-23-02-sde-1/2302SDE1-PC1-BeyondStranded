@@ -89,7 +89,6 @@ class Parser {
                     validInput = parseCommand(wl);
                     if (validInput) {
                         userInput = wl;
-                        System.out.println("status: 200");
                     }
                     break;
             }

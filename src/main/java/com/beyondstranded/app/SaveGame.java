@@ -11,10 +11,10 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.*;
 
-class SaveGame implements Serializable {
-   Location location;
-   Player player;
-   Inventory inventory;
+class SaveGame {
+   private final Location location;
+   private final Player player;
+   private final Inventory inventory;
 
    public SaveGame(Location location, Player player, Inventory inventory) {
       this.location = location;
@@ -22,12 +22,30 @@ class SaveGame implements Serializable {
       this.inventory = inventory;
    }
 
-   public void serialize(String filename) throws IOException {
-      Gson gson = new GsonBuilder().setPrettyPrinting().create();
-      String json = gson.toJson(this);
 
-      FileWriter writer = new FileWriter(filename);
-      writer.write(json);
-      writer.close();
+//   public void serialize(String filename) throws IOException {
+//      try (FileWriter writer = new FileWriter(filename);
+//           Gson gson = new GsonBuilder().setPrettyPrinting().create()) {
+//         gson.toJson(this, writer);
+//      }
+//   }
+
+   //TODO finish deserialize
+   public static void deserialize() {
+
+   }
+
+   public Location getLocation() {
+      return location;
+   }
+
+
+   public Player getPlayer() {
+      return player;
+   }
+
+
+   public Inventory getInventory() {
+      return inventory;
    }
 }

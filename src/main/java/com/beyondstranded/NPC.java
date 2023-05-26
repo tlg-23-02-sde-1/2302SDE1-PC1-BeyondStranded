@@ -8,6 +8,7 @@ public class NPC {
     private final List<String> dialogue;
     private final String location;
     private final String type;
+    private int health;
 
     //ctors
     public NPC(String name, List<String> dialogue, String location, String type) {
@@ -16,6 +17,8 @@ public class NPC {
         this.location = location;
         this.type = type;
     }
+
+
 
     //accessor get/set/toString
     public List<String> getDialogue() {
