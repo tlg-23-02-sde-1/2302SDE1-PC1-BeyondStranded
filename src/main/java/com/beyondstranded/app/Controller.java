@@ -18,7 +18,7 @@ public class Controller {
     private final Introduction intro = new Introduction(prompter);
     private final Command commands = new Command(prompter);
     private final int maxHealth = 50;
-   // private final MidiPlayer midiPlayer = new MidiPlayer();
+    private final MidiPlayer midiPlayer = new MidiPlayer();
     private Player player;
 
     // business methods
@@ -27,16 +27,15 @@ public class Controller {
     }
 
     private void startGame() {
-       // Thread introThread = new Thread(midiPlayer::playIntro);
-        //introThread.start();
+        Thread introThread = new Thread(midiPlayer::playIntro);
+        introThread.start();
 
-        //intro.showTitlePage();
-       // intro.gameOption();
-       // intro.showCoreStory();
+        intro.showTitlePage();
+        intro.gameOption();
+        intro.showCoreStory();
         gameStarted();
         intro.gameOver();
     }
-
 
     private void gameStarted() {
         boolean gameOver = false;
@@ -50,7 +49,7 @@ public class Controller {
         List<String> userInput;
 
         while (!gameOver) {
-           // midiPlayer.playGamePlay();
+            midiPlayer.playGamePlay();
             printLocationInfo(player.getLocation().getName(), allLocation);
             System.out.println("\nPlayer Health: " + player.getHealth());
             System.out.println("\nPlayer Inventory: " + player.getInventory());
@@ -79,6 +78,9 @@ public class Controller {
                     break;
                 case "drop":
                     allLocation = commands.dropCommand(userInput, player, allLocation);
+                    break;
+                case "teleport":
+                    player = commands.teleportCommand(userInput, player, allLocation);
                     break;
             }
             prompter.prompt("\nPress Enter to Continue:","","Invalid input. Only press Enter in your keyboard.\n");

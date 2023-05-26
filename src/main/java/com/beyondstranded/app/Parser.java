@@ -1,5 +1,7 @@
 package com.beyondstranded.app;
 
+import com.beyondstranded.Location;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,14 +25,23 @@ class Parser {
         List<String> directions = new ArrayList<>(List.of("south","east","west","north"));
         List<String> npc = new ArrayList<>(JsonDataLoader.parseNpcsFromFile().keySet());
         List<String> items = new ArrayList<>(JsonDataLoader.parseItemsFromFile().keySet());
+        // Teleport locations
+        List<String> locations = JsonDataLoader.parseLocationsFromFile().values().stream()
+                .map(Location::getName)
+                .map(String::toLowerCase)
+                .collect(Collectors.toList());
 
         List<String> validCommands = Stream.of(goCommandList,dropCommandList,getCommandList,lookCommandList,talkCommandList)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
-        List<String> objects = Stream.of(directions,npc,items)
+        // Added locations to objects
+        List<String> objects = Stream.of(directions,npc,items,locations)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
+
+        // Add a way to teleport
+        validCommands.add("teleport");
 
         if (wordlist.size() != 2) {
             System.out.println("ERROR: Only 2 word commands allowed!");
@@ -114,6 +125,13 @@ class Parser {
         }
         else if (talkCommandList.contains(firstWord)) {
             userInput.set(0, "talk");
+        }
+        else if (firstWord.contains("teleport")) {
+            for (Location location : JsonDataLoader.parseLocationsFromFile().values()) {
+                if (location.getName().toLowerCase().contains(userInput.get(1))) {
+                    userInput.set(1, location.getName());
+                }
+            }
         }
         return userInput;
     }

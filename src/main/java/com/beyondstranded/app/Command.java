@@ -73,6 +73,13 @@ class Command {
         return player;
     }
 
+    Player teleportCommand(List<String> command, Player player, Map<String, Location> allLocations) {
+        if (allLocations.containsKey(command.get(1))) {
+            player.setLocation(allLocations.get(command.get(1)));
+        }
+        return player;
+    }
+
     void lookCommand(List<String> command, Player player, Map<String, Location> allLocations) {
 
         List<String> locationItems = allLocations.get(player.getLocation().getName()).getItems();
@@ -162,7 +169,7 @@ class Command {
         clear();
         map.printMap();
         System.out.println("Key: ");
-        System.out.println("P = Player Location");
+        System.out.print("P = Player Location");
     }
 
     void helpCommand() {
