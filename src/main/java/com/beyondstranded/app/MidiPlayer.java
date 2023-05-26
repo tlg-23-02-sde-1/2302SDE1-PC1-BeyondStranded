@@ -27,6 +27,7 @@ public class MidiPlayer {
     private void playSound(String soundFilePath) {
         try {
             ClassLoader classLoader = MidiPlayer.class.getClassLoader();
+            @SuppressWarnings("ConstantConditions")
             Sequence sequence = MidiSystem.getSequence(classLoader.getResourceAsStream(soundFilePath));
 
             // Open a MIDI device
