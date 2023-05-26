@@ -27,14 +27,12 @@ public class Controller {
     private void startGame() {
         Thread introThread = new Thread(midiPlayer::playIntro);
         introThread.start();
-
         intro.showTitlePage();
         intro.gameOption();
         intro.showCoreStory();
         gameStarted();
         intro.gameOver();
     }
-
 
     private void gameStarted() {
         boolean gameOver = false;
@@ -77,6 +75,9 @@ public class Controller {
                     break;
                 case "drop":
                     allLocation = commands.dropCommand(userInput, player, allLocation);
+                    break;
+                case "teleport":
+                    player = commands.teleportCommand(userInput, player, allLocation);
                     break;
             }
             prompter.prompt("\nPress Enter to Continue:","","Invalid input. Only press Enter in your keyboard.\n");
