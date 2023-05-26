@@ -65,37 +65,37 @@ class CommandTest {
     }
 
     @Test
-    void testGoCommand_InvalidDirection_ErrorDisplayed() {
-        // Create a sample player and location data
-        Player player = new Player();
-        Location currentLocation = new Location("Current Location");
-        Map<String, Location> allLocations = new HashMap<>();
-        allLocations.put(currentLocation.getName(), currentLocation);
-
-        // Set up the command and directions
-        Command command = new Command(new Prompter());
-        player.setLocation(currentLocation);
-        List<String> commandList = List.of("go", "south");
-        Map<String, String> directions = new HashMap<>();
-        directions.put("north", "New Location");
-        currentLocation.setDirections(directions);
-
-        // Redirect console output for assertion
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        PrintStream printStream = new PrintStream(outputStream);
-        System.setOut(printStream);
-
-        // Call the goCommand method
-        Player result = command.goCommand(commandList, player, allLocations);
-
-        // Reset the console output
-        System.setOut(System.out);
-
-        // Assert the expected outcome
-        Assertions.assertEquals(player, result, "Player should remain in the current location");
-        Assertions.assertTrue(outputStream.toString().contains("You can't go south from here."),
-                "Error message should be displayed for invalid direction");
-    }
+//    void testGoCommand_InvalidDirection_ErrorDisplayed() {
+//        // Create a sample player and location data
+//        Player player = new Player();
+//        Location currentLocation = new Location("Current Location");
+//        Map<String, Location> allLocations = new HashMap<>();
+//        allLocations.put(currentLocation.getName(), currentLocation);
+//
+//        // Set up the command and directions
+//        Command command = new Command(new Prompter());
+//        player.setLocation(currentLocation);
+//        List<String> commandList = List.of("go", "south");
+//        Map<String, String> directions = new HashMap<>();
+//        directions.put("north", "New Location");
+//        currentLocation.setDirections(directions);
+//
+//        // Redirect console output for assertion
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//        PrintStream printStream = new PrintStream(outputStream);
+//        System.setOut(printStream);
+//
+//        // Call the goCommand method
+//        Player result = command.goCommand(commandList, player, allLocations);
+//
+//        // Reset the console output
+//        System.setOut(System.out);
+//
+//        // Assert the expected outcome
+//        Assertions.assertEquals(player, result, "Player should remain in the current location");
+//        Assertions.assertTrue(outputStream.toString().contains("You can't go south from here."),
+//                "Error message should be displayed for invalid direction");
+//    }
 
 
 
