@@ -1,6 +1,7 @@
 package com.beyondstranded;
 
 import java.util.List;
+import java.util.Map;
 
 public class Player {
 
@@ -8,6 +9,7 @@ public class Player {
     Location location;
     int health;
     List<String> inventory;
+    Map<String, Location> visitedLocations;
 
 /*    public Player(String name, Location location, int health, Inventory inventory) {
         this.name = name;
@@ -16,10 +18,11 @@ public class Player {
         this.inventory = inventory;
     }*/
 
-    public Player(Location location, int health, List<String> inventory) {
+    public Player(Location location, int health, List<String> inventory, Map<String, Location> visitedLocations) {
         this.location = location;
         this.health = health;
         this.inventory = inventory;
+        this.visitedLocations = visitedLocations;
     }
 
     public Player() {
@@ -55,6 +58,14 @@ public class Player {
     public void getItem() {
     }
 
+    public Map<String, Location> getVisitedLocations() {
+        return visitedLocations;
+    }
+
+    public void setVisitedLocations(Map<String, Location> visitedLocations) {
+        this.visitedLocations = visitedLocations;
+    }
+
     public List<String> getInventory() {
         return inventory;
     }
@@ -70,5 +81,4 @@ public class Player {
     public void setInventory(List<String> inventory) {
         this.inventory = inventory;
     }
-
 }
