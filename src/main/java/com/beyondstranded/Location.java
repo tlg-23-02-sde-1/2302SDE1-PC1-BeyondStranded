@@ -9,13 +9,15 @@ public class Location {
     private String description;
     private List<String> items;
     private List<String> npc;
+    private boolean hasVisited;
 
-    public Location(String name, Map<String, String> directions, String description, List<String> items, List<String> npc) {
+    public Location(String name, Map<String, String> directions, String description, List<String> items, List<String> npc, boolean hasVisited) {
         this.name = name;
         this.directions = directions;
         this.description = description;
         this.items = items;
         this.npc = npc;
+        this.hasVisited = hasVisited;
     }
 
     public Location(String current_location) {
@@ -61,7 +63,15 @@ public class Location {
         this.items = items;
     }
 
-//    public Item getItemByName(String itemName) {
+    public boolean isHasVisited() {
+        return hasVisited;
+    }
+
+    public void setHasVisited(boolean hasVisited) {
+        this.hasVisited = hasVisited;
+    }
+
+    //    public Item getItemByName(String itemName) {
 //        for (Item item : items){
 //            if(item.getName().equalsIgnoreCase(itemName)){
 //                return item;
@@ -79,6 +89,7 @@ public class Location {
                 ", description='" + description + '\'' +
                 ", items=" + items +
                 ", npc=" + npc +
+                ", hasVisited=" + hasVisited +
                 '}';
     }
 }

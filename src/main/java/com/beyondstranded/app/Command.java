@@ -4,9 +4,7 @@ import com.beyondstranded.*;
 import com.util.apps.Prompter;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -16,6 +14,8 @@ import static com.util.apps.Console.clear;
 class Command {
     private final Map<String, Item> itemsMap = JsonDataLoader.parseItemsFromFile();
     private final Prompter prompter;
+    private final GameMap map = new GameMap();
+
 
     public Command(Prompter prompter) {
         this.prompter = prompter;
@@ -26,12 +26,21 @@ class Command {
     }
 
     Player goCommand(List<String> command, Player player, Map<String, Location> allLocations) {
+        // Reset the previous location
+        try {
+            map.resetPreviousLocation();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         // Get the map of directions from the current location
         Map<String, String> directions = player.getLocation().getDirections();
+        Map<String, List<Integer>> locationMapCoordinates = GameMap.readCsv("/Map CSV/Map-Coordinates.csv");
 
         // If the user-provided direction is a key in the map,
         // get the location name it maps to
         if (directions.containsKey(command.get(1))){
+            String previousLocationName = player.getLocation().getName();
             String newLocationName = directions.get(command.get(1));
 
             // Get the Location object corresponding to the new location name
@@ -39,6 +48,24 @@ class Command {
 
             // Set the player's location to the new location
             player.setLocation(newLocation);
+
+            // Add the location to the map to be shown to user. Not including Awakening.
+
+            player.getVisitedLocations().put(newLocationName,newLocation);
+            player.getVisitedLocations().get(newLocationName).setHasVisited(true);
+            int prev_x_cord = locationMapCoordinates.get(previousLocationName).get(0);
+            int prev_y_cord = locationMapCoordinates.get(previousLocationName).get(1);
+            int x_cord = locationMapCoordinates.get(player.getLocation().getName()).get(0);
+            int y_cord = locationMapCoordinates.get(player.getLocation().getName()).get(1);
+            try {
+                map.unmarkPlayerPosition(prev_x_cord, prev_y_cord);
+                map.markPlayerPosition(player.getLocation().getName(), x_cord, y_cord);
+                map.setCurrentPlayerLocation(player.getLocation().getName());
+                map.setPreviousPlayerPosition(x_cord, y_cord);
+                map.visitLocation(player.getLocation().getName(),x_cord,y_cord);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         else {
             System.out.println("You can't go " + command.get(1) + " from here.");
@@ -122,15 +149,20 @@ class Command {
         return currentRoomLocation;
     }
 
-    void showMapCommand(Location player) {
+    void startMapCommand() {
+        map.startMap();
         try {
-            clear();
-            String path = "/ASCII_Art/Map" + player.getName() + ".txt";
-            String showMap = Introduction.readResource(path);
-            System.out.println(showMap);
+            map.visitLocation("Awakening", 23, 12);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    void showMapCommand() {
+        clear();
+        map.printMap();
+        System.out.println("Key: ");
+        System.out.println("P = Player Location");
     }
 
     void helpCommand() {
