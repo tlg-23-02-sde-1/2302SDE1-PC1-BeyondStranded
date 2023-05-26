@@ -64,7 +64,7 @@ class CommandTest {
         Assertions.assertEquals(player, result, "Player's location should be updated to the new location");
     }
 
-    @Test
+//    @Test
 //    void testGoCommand_InvalidDirection_ErrorDisplayed() {
 //        // Create a sample player and location data
 //        Player player = new Player();
@@ -96,8 +96,5 @@ class CommandTest {
 //        Assertions.assertTrue(outputStream.toString().contains("You can't go south from here."),
 //                "Error message should be displayed for invalid direction");
 //    }
-
-
-
 }
 
