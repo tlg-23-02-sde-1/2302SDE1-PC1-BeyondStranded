@@ -15,6 +15,7 @@ class Introduction {
     private static String objective;
     private static String welcome;
     private static String newGame;
+    private static String continueGame;
     private static String story;
     private static String winCondition;
     private static String lossCondition;
@@ -35,6 +36,7 @@ class Introduction {
         clear();
         blankLines(1);
         System.out.println(newGame);
+        System.out.println(continueGame); //adding as a feature to continue game state
         prompter.prompt("\n\t\t\tEnter your command: ","(?i)^new game$","\t\t\tThis is not a valid option\n");
     }
 
@@ -63,6 +65,7 @@ class Introduction {
         try {
             banner = readResource("/ASCII_Art/Banner.txt");
             newGame = readResource("/images/New Game Prompt.txt");
+            continueGame = readResource("/saveFile.txt");
             story = readResource("/images/Storyline Prompt.txt");
             objective = readResource("/images/Objective Prompt.txt");
             welcome = readResource("/images/Welcome Prompt.txt");
