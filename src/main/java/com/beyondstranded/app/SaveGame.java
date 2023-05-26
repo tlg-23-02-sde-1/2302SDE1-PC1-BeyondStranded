@@ -9,27 +9,25 @@ import com.google.gson.*;
 import java.awt.*;
 import java.io.*;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class SaveGame implements java.io.Serializable {
+class SaveGame implements Serializable {
    Location location;
    Player player;
    Inventory inventory;
 
+   public SaveGame(Location location, Player player, Inventory inventory) {
+      this.location = location;
+      this.player = player;
+      this.inventory = inventory;
+   }
 
+   public void serialize(String filename) throws IOException {
+      Gson gson = new GsonBuilder().setPrettyPrinting().create();
+      String json = gson.toJson(this);
 
-
-//    @Override
-//    public Component deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-//        return null;
-//    }
-//
-//    @Override
-//    public JsonElement serialize(Component src, Type typeOfSrc, JsonSerializationContext context) {
-//        JsonObject result = new JsonObject();
-//        result.add("type", new JsonPrimitive(src.getClass().getCanonicalName()));
-//        result.add("properties", context.serialize(src, src.getClass()));
-//        return result;
-//    }
+      FileWriter writer = new FileWriter(filename);
+      writer.write(json);
+      writer.close();
+   }
 }
