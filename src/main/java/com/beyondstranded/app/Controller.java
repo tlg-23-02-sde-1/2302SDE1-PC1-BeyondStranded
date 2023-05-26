@@ -1,6 +1,7 @@
 package com.beyondstranded.app;
 
 import com.beyondstranded.Location;
+import com.beyondstranded.NPC;
 import com.beyondstranded.Player;
 import com.util.apps.Prompter;
 
@@ -38,6 +39,7 @@ public class Controller {
         boolean gameOver = false;
         Map<String, Location> allLocation;
         allLocation = JsonDataLoader.parseLocationsFromFile();
+        Map<String, NPC> allNPCS = JsonDataLoader.parseNpcsFromFile();
         List<String> items = new ArrayList<>();
         commands.startMapCommand();
         Map<String, Location> visitedLocation = new HashMap<>();
@@ -65,7 +67,7 @@ public class Controller {
                     commands.lookCommand(userInput, player, allLocation);
                     break;
                 case "talk":
-                    commands.talkCommand(userInput, player, JsonDataLoader.parseNpcsFromFile());
+                    commands.talkCommand(userInput, player, allNPCS);
                     break;
                 case "map":
                     commands.showMapCommand();
@@ -78,6 +80,9 @@ public class Controller {
                     break;
                 case "teleport":
                     player = commands.teleportCommand(userInput, player, allLocation);
+                    break;
+                case "aid":
+                    allNPCS = commands.aidCommand(userInput, player, allNPCS);
                     break;
             }
             prompter.prompt("\nPress Enter to Continue:","","Invalid input. Only press Enter in your keyboard.\n");
