@@ -4,10 +4,7 @@ import com.beyondstranded.Location;
 import com.beyondstranded.Player;
 import com.util.apps.Prompter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 import static com.util.apps.Console.clear;
 
@@ -28,9 +25,7 @@ public class Controller {
     }
 
     private void startGame() {
-        Thread introThread = new Thread(() -> {
-            midiPlayer.playIntro();
-        });
+        Thread introThread = new Thread(midiPlayer::playIntro);
         introThread.start();
 
         intro.showTitlePage();
