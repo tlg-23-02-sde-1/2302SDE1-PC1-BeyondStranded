@@ -19,8 +19,8 @@ public class Controller {
     private final Introduction intro = new Introduction(prompter);
     private final Command commands = new Command(prompter);
     private final int maxHealth = 50;
+    private final MidiPlayer midiPlayer = new MidiPlayer();
     private Player player;
-    private MidiPlayer midiPlayer;
 
     // business methods
     public void start() {
@@ -28,13 +28,18 @@ public class Controller {
     }
 
     private void startGame() {
+        Thread introThread = new Thread(() -> {
+            midiPlayer.playIntro();
+        });
+        introThread.start();
+
         intro.showTitlePage();
         intro.gameOption();
         intro.showCoreStory();
         gameStarted();
         intro.gameOver();
-        midiPlayer.playIntro();
     }
+
 
     private void gameStarted() {
         boolean gameOver = false;
@@ -45,6 +50,7 @@ public class Controller {
         List<String> userInput;
 
         while (!gameOver) {
+            midiPlayer.playGamePlay();
             printLocationInfo(player.getLocation().getName(), allLocation);
             System.out.println("\nPlayer Health: " + player.getHealth());
             System.out.println("\nPlayer Inventory: " + player.getInventory());
