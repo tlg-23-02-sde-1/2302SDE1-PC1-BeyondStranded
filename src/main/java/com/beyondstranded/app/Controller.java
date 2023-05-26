@@ -35,7 +35,10 @@ public class Controller {
         Map<String, Location> allLocation;
         allLocation = JsonDataLoader.parseLocationsFromFile();
         List<String> items = new ArrayList<>();
-        player = new Player(JsonDataLoader.getLocationInfo("Awakening", allLocation),maxHealth, items);
+        commands.startMapCommand();
+        Map<String, Location> visitedLocation = new HashMap<>();
+        player = new Player(JsonDataLoader.getLocationInfo("Awakening", allLocation),maxHealth, items, visitedLocation);
+        player.getVisitedLocations().put(player.getLocation().getName(),player.getLocation());
         List<String> userInput;
 
         while (!gameOver) {
@@ -60,7 +63,7 @@ public class Controller {
                     commands.talkCommand(userInput, player, JsonDataLoader.parseNpcsFromFile());
                     break;
                 case "map":
-                    commands.showMapCommand(player.getLocation());
+                    commands.showMapCommand();
                     break;
                 case "get":
                     allLocation = commands.getCommand(userInput, player, allLocation);
