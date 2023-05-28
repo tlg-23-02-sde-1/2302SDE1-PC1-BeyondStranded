@@ -1,5 +1,6 @@
 package com.beyondstranded.app;
 
+import com.beyondstranded.Combat;
 import com.beyondstranded.Location;
 import com.beyondstranded.NPC;
 import com.beyondstranded.Player;
@@ -86,6 +87,11 @@ public class Controller {
                     break;
             }
             prompter.prompt("\nPress Enter to Continue:","","Invalid input. Only press Enter in your keyboard.\n");
+            if (player.getLocation().getName().equals("Cave")) {
+                NPC npc = new NPC("Hunter", Collections.singletonList("You're in my world now, and I've got the upper hand."), "Cave", "foe");
+                Combat combat = new Combat(player, npc);
+                combat.startCombat();
+            }
         }
     }
 
