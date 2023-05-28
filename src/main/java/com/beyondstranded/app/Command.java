@@ -181,4 +181,56 @@ class Command {
             e.printStackTrace();
         }
     }
+
+    Map<String, NPC> aidCommand(List<String> command, Player player, Map<String, NPC> npcs) {
+        List<String> npcNames = npcs.values().stream()
+                .filter((NPC) -> !NPC.isHasHelped())
+                .map(NPC::getName)
+                .collect(Collectors.toList());
+
+        if (npcNames.size() > 0 && npcNames.contains(command.get(1))) {
+            int index = npcNames.indexOf(command.get(1));
+            NPC aidNPC = npcs.get(npcNames.get(index));
+
+            // Conditions to Aid the Healer
+            if (aidNPC.getName().equals("healer") && player.getInventory().contains("bandages")) {
+                aidNPC.getAidDialogue().forEach(System.out::println);
+                player.getInventory().remove("bandages");
+                List<String> npcItems = aidNPC.getItems();
+                player.getInventory().addAll(npcItems);
+                npcs.get(aidNPC.getName()).setHasHelped(true);
+            }
+            else if (aidNPC.getName().equals("healer")) {
+                System.out.println(aidNPC.getDialogue().get(1));
+            }
+            else if (aidNPC.isHasHelped()) {
+                System.out.println("Thank you traveler for helping me earlier. I do not require further aid.");
+            }
+
+            // Conditions to Aid the Chief
+            if (npcNames.size() == 1 && player.getInventory().contains("talisman")) {
+                aidNPC.getAidDialogue().forEach(System.out::println);
+                player.getInventory().remove("talisman");
+                List<String> npcItems = aidNPC.getItems();
+                player.getInventory().addAll(npcItems);
+                npcs.get(aidNPC.getName()).setHasHelped(true);
+            }
+            else if (npcNames.size() == 1) {
+                System.out.println("Thank you traveler for your help with our village healer");
+                System.out.println("I wish I could be of more help in your journey.");
+                System.out.println("Alas, since our Talisman was stolen a few days ago.");
+                System.out.println("We have been on lookout for it as it is sacred to our people.");
+                System.out.println("If you manage to find it in your travels around the island. Please return it to us.");
+            }
+
+            // Conditions to Aid the Hunter for Testing Purpose Only. Future implementation will be from combat.
+            if (aidNPC.getName().equals("hunter")) {
+                aidNPC.getAidDialogue().forEach(System.out::println);
+                List<String> npcItems = aidNPC.getItems();
+                player.getInventory().addAll(npcItems);
+                npcs.get(aidNPC.getName()).setHasHelped(true);
+            }
+        }
+        return npcs;
+    }
 }

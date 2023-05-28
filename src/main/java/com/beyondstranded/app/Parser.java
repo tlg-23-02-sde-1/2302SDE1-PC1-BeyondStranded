@@ -16,6 +16,7 @@ class Parser {
     private final List<String> getCommandList = loadCommandMap("Get");
     private final List<String> lookCommandList = loadCommandMap("Look");
     private final List<String> talkCommandList = loadCommandMap("Talk");
+    private final List<String> aidCommandList = loadCommandMap("Aid");
 
     boolean parseCommand(List<String> wordlist) {
         boolean result = false;
@@ -31,7 +32,7 @@ class Parser {
                 .map(String::toLowerCase)
                 .collect(Collectors.toList());
 
-        List<String> validCommands = Stream.of(goCommandList,dropCommandList,getCommandList,lookCommandList,talkCommandList)
+        List<String> validCommands = Stream.of(goCommandList,dropCommandList,getCommandList,lookCommandList,talkCommandList, aidCommandList)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
