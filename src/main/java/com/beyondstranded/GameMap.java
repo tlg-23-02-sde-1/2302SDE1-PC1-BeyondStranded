@@ -26,7 +26,6 @@ public class GameMap {
     public void startMap() {
         try {
             visitLocation("Compass", 85, 0);
-            //visitLocation("Awakening", 30, 15);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,6 +119,29 @@ public class GameMap {
                 lastIndex--;
             }
             System.out.println(new String(row, 0, lastIndex + 1));
+        }
+    }
+
+    public void setGameMap(Player player, String newLocationName, Location newLocation) {
+        // Add the location to the map to be shown to user. Not including Awakening.
+        Map<String, List<Integer>> locationMapCoordinates = readCsv("/Map CSV/Map-Coordinates.csv");
+        String previousLocationName = player.getLocation().getName();
+        player.setLocation(newLocation);
+
+        player.getVisitedLocations().put(newLocationName,newLocation);
+        player.getVisitedLocations().get(newLocationName).setHasVisited(true);
+        int prev_x_cord = locationMapCoordinates.get(previousLocationName).get(0);
+        int prev_y_cord = locationMapCoordinates.get(previousLocationName).get(1);
+        int x_cord = locationMapCoordinates.get(player.getLocation().getName()).get(0);
+        int y_cord = locationMapCoordinates.get(player.getLocation().getName()).get(1);
+        try {
+            unmarkPlayerPosition(prev_x_cord, prev_y_cord);
+            markPlayerPosition(player.getLocation().getName(), x_cord, y_cord);
+            setCurrentPlayerLocation(player.getLocation().getName());
+            setPreviousPlayerPosition(x_cord, y_cord);
+            visitLocation(player.getLocation().getName(),x_cord,y_cord);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

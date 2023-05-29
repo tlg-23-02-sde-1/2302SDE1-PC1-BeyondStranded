@@ -64,7 +64,12 @@
     },
     {
       "name": "manual",
-      "description": "Instructions on how to use the ancient technology and where it works best.",
+      "description": "There appears to be a note in the front page of the manual.
+
+In the silent ship's remains,
+Where land kisses the ocean's lanes,
+To kindle the spark, and break the chains,
+Say 'Activate', and unleash the gains.",
       "location": "Village",
       "type": "Puzzle",
       "use": "Guidance"

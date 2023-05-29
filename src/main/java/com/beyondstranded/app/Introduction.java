@@ -20,6 +20,7 @@ class Introduction {
     private static String winCondition;
     private static String lossCondition;
     private static String gameOver;
+    private static String congratulations;
 
 
     private final Prompter prompter;
@@ -44,6 +45,10 @@ class Introduction {
         clear();
         blankLines(1);
         System.out.println(gameOver);
+    }
+
+    void congratulations() {
+        showcasePrompt(congratulations);
     }
 
     void showCoreStory() {
@@ -72,6 +77,7 @@ class Introduction {
             winCondition = readResource("/images/Win Condition Prompt.txt");
             lossCondition = readResource("/images/Loss Condition Prompt.txt");
             gameOver = readResource("/images/Game Over.txt");
+            congratulations = readResource("/images/Congratulations.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }

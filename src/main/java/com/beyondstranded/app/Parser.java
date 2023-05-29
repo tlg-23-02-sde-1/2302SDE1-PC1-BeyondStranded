@@ -17,6 +17,7 @@ class Parser {
     private final List<String> lookCommandList = loadCommandMap("Look");
     private final List<String> talkCommandList = loadCommandMap("Talk");
     private final List<String> aidCommandList = loadCommandMap("Aid");
+    private final List<String> activateCommandList = loadCommandMap("Activate");
 
     boolean parseCommand(List<String> wordlist) {
         boolean result = false;
@@ -32,7 +33,8 @@ class Parser {
                 .map(String::toLowerCase)
                 .collect(Collectors.toList());
 
-        List<String> validCommands = Stream.of(goCommandList,dropCommandList,getCommandList,lookCommandList,talkCommandList, aidCommandList)
+        List<String> validCommands = Stream.of(goCommandList,dropCommandList,getCommandList,
+                        lookCommandList,talkCommandList,aidCommandList,activateCommandList)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
@@ -65,10 +67,8 @@ class Parser {
 
     List<String> wordList(String input) {
         String delims = "\\W+";
-        List<String> strlist = new ArrayList<>();
         String[] words = input.split(delims);
-        strlist.addAll(Arrays.asList(words));
-        return strlist;
+        return new ArrayList<>(Arrays.asList(words));
     }
 
     List<String> userCommand() {
@@ -101,7 +101,7 @@ class Parser {
                     validInput = parseCommand(wl);
                     if (validInput) {
                         userInput = wl;
-                        System.out.println("status: 200");
+                        //System.out.println("status: 200");
                     }
                     break;
             }
@@ -154,11 +154,10 @@ class Parser {
         }
         return goCommand;
     }
-
-    //TEST
-    public static void main(String[] args) {
-        Parser parser = new Parser();
-        List<String> input = parser.userCommand();
-        System.out.println(input);
-    }
+//    //TEST
+//    public static void main(String[] args) {
+//        Parser parser = new Parser();
+//        List<String> input = parser.userCommand();
+//        System.out.println(input);
+//    }
 }

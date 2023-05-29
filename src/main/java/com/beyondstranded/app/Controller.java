@@ -16,10 +16,9 @@ public class Controller {
     private final Prompter prompter = new Prompter(new Scanner(System.in));
     private final Parser parser = new Parser();
     private final Introduction intro = new Introduction(prompter);
-    private final Command commands = new Command(prompter);
+    private final Command commands = new Command();
     private final int maxHealth = 50;
     private final MidiPlayer midiPlayer = new MidiPlayer();
-    private Player player;
 
     // business methods
     public void start() {
@@ -38,14 +37,15 @@ public class Controller {
 
     private void gameStarted() {
         boolean gameOver = false;
+        boolean hasPlayerWon = false;
         Map<String, Location> allLocation;
         allLocation = JsonDataLoader.parseLocationsFromFile();
         Map<String, NPC> allNPCS = JsonDataLoader.parseNpcsFromFile();
         List<String> items = new ArrayList<>();
         commands.startMapCommand();
         Map<String, Location> visitedLocation = new HashMap<>();
-        player = new Player(JsonDataLoader.getLocationInfo("Awakening", allLocation),maxHealth, items, visitedLocation);
-        player.getVisitedLocations().put(player.getLocation().getName(),player.getLocation());
+        Player player = new Player(JsonDataLoader.getLocationInfo("Awakening", allLocation), maxHealth, items, visitedLocation);
+        player.getVisitedLocations().put(player.getLocation().getName(), player.getLocation());
         List<String> userInput;
 
         while (!gameOver) {
@@ -85,13 +85,22 @@ public class Controller {
                 case "aid":
                     allNPCS = commands.aidCommand(userInput, player, allNPCS);
                     break;
+                case "activate":
+                    hasPlayerWon = commands.activateCommand(userInput, player);
+                    gameOver = hasPlayerWon;
+                    break;
             }
             prompter.prompt("\nPress Enter to Continue:","","Invalid input. Only press Enter in your keyboard.\n");
             if (player.getLocation().getName().equals("Cave")) {
-                NPC npc = new NPC("Hunter", Collections.singletonList("You're in my world now, and I've got the upper hand."), "Cave", "foe");
+                NPC npc = allNPCS.get("hunter");
+                //NPC npc = new NPC("Hunter", Collections.singletonList("You're in my world now, and I've got the upper hand."), "Cave", "foe");
                 Combat combat = new Combat(player, npc);
                 combat.startCombat();
             }
+        }
+
+        if (hasPlayerWon) {
+            intro.congratulations();
         }
     }
 
