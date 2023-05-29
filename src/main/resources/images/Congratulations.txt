@@ -1,0 +1,16 @@
+=======================================================================
+||                                                                   ||
+||                          CONGRATULATIONS                          ||
+||                                                                   ||
+||  Congratulations, adventurer! You have successfully navigated     ||
+||  the trials of the island, aided its inhabitants, and unlocked    ||
+||  the secrets of an ancient technology. This is not the end, but   ||
+||  rather, the beginning of a new chapter.                          ||
+||                                                                   ||
+||  Remember, every choice you made, every challenge you overcame    ||
+||  was a testament to your resilience and courage. May your future  ||
+||  journeys be filled with adventure and discovery.                 ||
+||                                                                   ||
+||                        Thank you for playing!                     ||
+||                                                                   ||
+=======================================================================
