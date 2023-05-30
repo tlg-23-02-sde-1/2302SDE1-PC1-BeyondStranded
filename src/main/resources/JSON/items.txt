@@ -22,7 +22,7 @@
     },
     {
       "name": "rope",
-      "description": "A long piece of sturdy rope. Might be useful for climbing or tying things together.",
+      "description": "A long piece of sturdy rope. Might be useful for climbing or tying something up.",
       "location": "Waterfall",
       "type": "Puzzle",
       "use": "Climb/Secure"

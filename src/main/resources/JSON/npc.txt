@@ -2,9 +2,9 @@
     {
       "name": "chief",
       "dialogue": [
-        "Greetings stranger, My name is Chief.",
-        "This land can be treacherous.",
-        "Go forth and find shelter."
+        "Greetings stranger, My name is Chief. Could you aid us?",
+        "I require aid. If you are up for the challenge. If you find a talisman. Please bring it back here.",
+        "Aid us please. If you see a talisman lying around the island please bring it back to me."
       ],
       "aidDialogue": [
         "Greetings again, traveler. You have returned to our village, but there's something different about you...",

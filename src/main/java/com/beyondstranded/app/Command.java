@@ -12,6 +12,7 @@ import static com.util.apps.Console.clear;
 
 class Command {
     private final Map<String, Item> itemsMap = JsonDataLoader.parseItemsFromFile();
+    Map<String, NPC> npcMap = JsonDataLoader.parseNpcsFromFile();
     private final GameMap map = new GameMap();
 
     Player goCommand(List<String> command, Player player, Map<String, Location> allLocations) {
@@ -145,15 +146,15 @@ class Command {
         }
     }
 
-    Map<String, NPC> aidCommand(List<String> command, Player player, Map<String, NPC> npcs) {
-        List<String> npcNames = npcs.values().stream()
+    Map<String, NPC> aidCommand(List<String> command, Player player) {
+        List<String> npcNames = npcMap.values().stream()
                 .filter((NPC) -> !NPC.isHasHelped())
                 .map(NPC::getName)
                 .collect(Collectors.toList());
 
         if (npcNames.size() > 0 && npcNames.contains(command.get(1))) {
             int index = npcNames.indexOf(command.get(1));
-            NPC aidNPC = npcs.get(npcNames.get(index));
+            NPC aidNPC = npcMap.get(npcNames.get(index));
 
             // Conditions to Aid the Healer
             if (aidNPC.getName().equals("healer") && player.getInventory().contains("bandages")) {
@@ -161,7 +162,7 @@ class Command {
                 player.getInventory().remove("bandages");
                 List<String> npcItems = aidNPC.getItems();
                 player.getInventory().addAll(npcItems);
-                npcs.get(aidNPC.getName()).setHasHelped(true);
+                npcMap.get(aidNPC.getName()).setHasHelped(true);
             } else if (aidNPC.getName().equals("healer")) {
                 System.out.println(aidNPC.getDialogue().get(1));
             } else if (aidNPC.isHasHelped()) {
@@ -174,7 +175,7 @@ class Command {
                 player.getInventory().remove("talisman");
                 List<String> npcItems = aidNPC.getItems();
                 player.getInventory().addAll(npcItems);
-                npcs.get(aidNPC.getName()).setHasHelped(true);
+                npcMap.get(aidNPC.getName()).setHasHelped(true);
             } else if (npcNames.size() == 1) {
                 System.out.println("Thank you traveler for your help with our village healer");
                 System.out.println("I wish I could be of more help in your journey.");
@@ -182,16 +183,8 @@ class Command {
                 System.out.println("We have been on lookout for it as it is sacred to our people.");
                 System.out.println("If you manage to find it in your travels around the island. Please return it to us.");
             }
-
-            // Conditions to Aid the Hunter for Testing Purpose Only. Future implementation will be from combat.
-            if (aidNPC.getName().equals("hunter")) {
-                aidNPC.getAidDialogue().forEach(System.out::println);
-                List<String> npcItems = aidNPC.getItems();
-                player.getInventory().addAll(npcItems);
-                npcs.get(aidNPC.getName()).setHasHelped(true);
-            }
         }
-        return npcs;
+        return npcMap;
     }
 
     boolean activateCommand(List<String> command, Player player) {
@@ -208,5 +201,18 @@ class Command {
             System.out.println("You can not activate " + command.get(1));
         }
         return gameOver;
+    }
+
+    Player tieCommand(List<String> command, Player player) {
+        if (player.getInventory().contains("rope")
+                && player.getLocation().getNpc().contains("hunter")
+                && command.get(1).equals("hunter")) {
+            player.getInventory().remove("rope");
+            npcMap.get("hunter").setHasHelped(true);
+            player.getInventory().add(npcMap.get("hunter").getItems().get(0));
+            npcMap.get("hunter").getItems().remove(0);
+            npcMap.get("hunter").getAidDialogue().forEach(System.out::println);
+        }
+        return player;
     }
 }

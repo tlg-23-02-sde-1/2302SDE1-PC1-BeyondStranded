@@ -18,6 +18,7 @@ class Parser {
     private final List<String> talkCommandList = loadCommandMap("Talk");
     private final List<String> aidCommandList = loadCommandMap("Aid");
     private final List<String> activateCommandList = loadCommandMap("Activate");
+    private final List<String> tieCommandList = loadCommandMap("Tie");
 
     boolean parseCommand(List<String> wordlist) {
         boolean result = false;
@@ -34,7 +35,8 @@ class Parser {
                 .collect(Collectors.toList());
 
         List<String> validCommands = Stream.of(goCommandList,dropCommandList,getCommandList,
-                        lookCommandList,talkCommandList,aidCommandList,activateCommandList)
+                        lookCommandList,talkCommandList,aidCommandList,activateCommandList,
+                        tieCommandList)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
@@ -128,6 +130,9 @@ class Parser {
         else if (talkCommandList.contains(firstWord)) {
             userInput.set(0, "talk");
         }
+        else if (tieCommandList.contains(firstWord)) {
+            userInput.set(0, "tie");
+        }
         else if (firstWord.contains("teleport")) {
             for (Location location : JsonDataLoader.parseLocationsFromFile().values()) {
                 if (location.getName().toLowerCase().contains(userInput.get(1))) {
@@ -138,7 +143,7 @@ class Parser {
         return userInput;
     }
 
-    public List<String> loadCommandMap(String command) throws RuntimeException {
+    private List<String> loadCommandMap(String command) throws RuntimeException {
         List<String> goCommand = new ArrayList<>();
         String commandPath = "/Commands CSV/" + command + "-Command.csv";
 
@@ -154,10 +159,4 @@ class Parser {
         }
         return goCommand;
     }
-//    //TEST
-//    public static void main(String[] args) {
-//        Parser parser = new Parser();
-//        List<String> input = parser.userCommand();
-//        System.out.println(input);
-//    }
 }
