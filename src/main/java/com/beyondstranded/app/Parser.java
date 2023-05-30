@@ -100,6 +100,7 @@ class Parser {
                     break label;
                 case "save":
                     userInput.add(0, "save");
+                    break label;
                 default:
                     List<String> wl = wordList(input);
                     wl = checkCommand(wl);
