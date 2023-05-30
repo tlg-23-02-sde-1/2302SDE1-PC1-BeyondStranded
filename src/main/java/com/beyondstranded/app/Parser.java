@@ -20,6 +20,7 @@ class Parser {
     private final List<String> activateCommandList = loadCommandMap("Activate");
     private final List<String> tieCommandList = loadCommandMap("Tie");
 
+
     boolean parseCommand(List<String> wordlist) {
         boolean result = false;
         String verb;
@@ -97,6 +98,8 @@ class Parser {
                 case "map":
                     userInput.add(0, "map");
                     break label;
+                case "save":
+                    userInput.add(0, "save");
                 default:
                     List<String> wl = wordList(input);
                     wl = checkCommand(wl);

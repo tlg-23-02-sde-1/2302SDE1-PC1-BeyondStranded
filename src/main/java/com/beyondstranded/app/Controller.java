@@ -69,6 +69,9 @@ public class Controller {
                 case "help":
                     commands.helpCommand();
                     break;
+                case "save":
+                    commands.saveGameProgress(player);
+                    break;
                 case "look":
                     commands.lookCommand(userInput, player, allLocation);
                     break;
