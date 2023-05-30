@@ -1,5 +1,7 @@
 package com.beyondstranded.app;
 
+import com.beyondstranded.Location;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,6 +16,10 @@ class Parser {
     private final List<String> getCommandList = loadCommandMap("Get");
     private final List<String> lookCommandList = loadCommandMap("Look");
     private final List<String> talkCommandList = loadCommandMap("Talk");
+    private final List<String> aidCommandList = loadCommandMap("Aid");
+    private final List<String> activateCommandList = loadCommandMap("Activate");
+    private final List<String> tieCommandList = loadCommandMap("Tie");
+
 
     boolean parseCommand(List<String> wordlist) {
         boolean result = false;
@@ -23,14 +29,25 @@ class Parser {
         List<String> directions = new ArrayList<>(List.of("south","east","west","north"));
         List<String> npc = new ArrayList<>(JsonDataLoader.parseNpcsFromFile().keySet());
         List<String> items = new ArrayList<>(JsonDataLoader.parseItemsFromFile().keySet());
+        // Teleport locations
+        List<String> locations = JsonDataLoader.parseLocationsFromFile().values().stream()
+                .map(Location::getName)
+                .map(String::toLowerCase)
+                .collect(Collectors.toList());
 
-        List<String> validCommands = Stream.of(goCommandList,dropCommandList,getCommandList,lookCommandList,talkCommandList)
+        List<String> validCommands = Stream.of(goCommandList,dropCommandList,getCommandList,
+                        lookCommandList,talkCommandList,aidCommandList,activateCommandList,
+                        tieCommandList)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
-        List<String> objects = Stream.of(directions,npc,items)
+        // Added locations to objects
+        List<String> objects = Stream.of(directions,npc,items,locations)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
+
+        // Add a way to teleport
+        validCommands.add("teleport");
 
         if (wordlist.size() != 2) {
             System.out.println("ERROR: Only 2 word commands allowed!");
@@ -53,10 +70,8 @@ class Parser {
 
     List<String> wordList(String input) {
         String delims = "\\W+";
-        List<String> strlist = new ArrayList<>();
         String[] words = input.split(delims);
-        strlist.addAll(Arrays.asList(words));
-        return strlist;
+        return new ArrayList<>(Arrays.asList(words));
     }
 
     List<String> userCommand() {
@@ -83,13 +98,15 @@ class Parser {
                 case "map":
                     userInput.add(0, "map");
                     break label;
+                case "save":
+                    userInput.add(0, "save");
                 default:
                     List<String> wl = wordList(input);
                     wl = checkCommand(wl);
                     validInput = parseCommand(wl);
                     if (validInput) {
                         userInput = wl;
-                        System.out.println("status: 200");
+                        //System.out.println("status: 200");
                     }
                     break;
             }
@@ -116,10 +133,20 @@ class Parser {
         else if (talkCommandList.contains(firstWord)) {
             userInput.set(0, "talk");
         }
+        else if (tieCommandList.contains(firstWord)) {
+            userInput.set(0, "tie");
+        }
+        else if (firstWord.contains("teleport")) {
+            for (Location location : JsonDataLoader.parseLocationsFromFile().values()) {
+                if (location.getName().toLowerCase().contains(userInput.get(1))) {
+                    userInput.set(1, location.getName());
+                }
+            }
+        }
         return userInput;
     }
 
-    public List<String> loadCommandMap(String command) throws RuntimeException {
+    private List<String> loadCommandMap(String command) throws RuntimeException {
         List<String> goCommand = new ArrayList<>();
         String commandPath = "/Commands CSV/" + command + "-Command.csv";
 
@@ -134,12 +161,5 @@ class Parser {
             e.printStackTrace();
         }
         return goCommand;
-    }
-
-    //TEST
-    public static void main(String[] args) {
-        Parser parser = new Parser();
-        List<String> input = parser.userCommand();
-        System.out.println(input);
     }
 }

@@ -39,6 +39,10 @@ public class Player {
         return inventory;
     }*/
 
+    public void decreaseHealth(int damage) {
+        health -= damage;
+    }
+
     public Location getLocation() {
         return location;
     }

@@ -13,17 +13,8 @@ import static com.util.apps.Console.clear;
 
 class Command {
     private final Map<String, Item> itemsMap = JsonDataLoader.parseItemsFromFile();
-    private final Prompter prompter;
+    Map<String, NPC> npcMap = JsonDataLoader.parseNpcsFromFile();
     private final GameMap map = new GameMap();
-
-
-    public Command(Prompter prompter) {
-        this.prompter = prompter;
-    }
-
-    void commandCheck(List<String> command) {
-
-    }
 
     Player goCommand(List<String> command, Player player, Map<String, Location> allLocations) {
         // Reset the previous location
@@ -35,40 +26,26 @@ class Command {
 
         // Get the map of directions from the current location
         Map<String, String> directions = player.getLocation().getDirections();
-        Map<String, List<Integer>> locationMapCoordinates = GameMap.readCsv("/Map CSV/Map-Coordinates.csv");
 
-        // If the user-provided direction is a key in the map,
-        // get the location name it maps to
-        if (directions.containsKey(command.get(1))){
-            String previousLocationName = player.getLocation().getName();
+        // If the user-provided direction is a key in the map, get the location name it maps to
+        if (directions.containsKey(command.get(1))) {
             String newLocationName = directions.get(command.get(1));
 
             // Get the Location object corresponding to the new location name
             Location newLocation = JsonDataLoader.getLocationInfo(newLocationName, allLocations);
 
-            // Set the player's location to the new location
+            // Set the player's location to the new location and update gameMap
+            map.setGameMap(player, newLocationName, newLocation);
             player.setLocation(newLocation);
-
-            // Add the location to the map to be shown to user. Not including Awakening.
-
-            player.getVisitedLocations().put(newLocationName,newLocation);
-            player.getVisitedLocations().get(newLocationName).setHasVisited(true);
-            int prev_x_cord = locationMapCoordinates.get(previousLocationName).get(0);
-            int prev_y_cord = locationMapCoordinates.get(previousLocationName).get(1);
-            int x_cord = locationMapCoordinates.get(player.getLocation().getName()).get(0);
-            int y_cord = locationMapCoordinates.get(player.getLocation().getName()).get(1);
-            try {
-                map.unmarkPlayerPosition(prev_x_cord, prev_y_cord);
-                map.markPlayerPosition(player.getLocation().getName(), x_cord, y_cord);
-                map.setCurrentPlayerLocation(player.getLocation().getName());
-                map.setPreviousPlayerPosition(x_cord, y_cord);
-                map.visitLocation(player.getLocation().getName(),x_cord,y_cord);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        else {
+        } else {
             System.out.println("You can't go " + command.get(1) + " from here.");
+        }
+        return player;
+    }
+
+    Player teleportCommand(List<String> command, Player player, Map<String, Location> allLocations) {
+        if (allLocations.containsKey(command.get(1))) {
+            player.setLocation(allLocations.get(command.get(1)));
         }
         return player;
     }
@@ -85,8 +62,7 @@ class Command {
                 Item item = itemsMap.get(itemName.toLowerCase());
                 if (item != null) {
                     System.out.println(item.getDescription());
-                }
-                else {
+                } else {
                     System.out.println("There is no " + command.get(1) + " to look at.");
                 }
             }
@@ -100,16 +76,14 @@ class Command {
             List<String> npcDialogue = roomNPC.getDialogue();
             String randomDialogue = npcDialogue.get(rand.nextInt(npcDialogue.size()));
             System.out.println("Dialogue of " + roomNPC.getName() + " : " + randomDialogue);
-        }
-        else if (roomNPC == null) {
+        } else if (roomNPC == null) {
             System.out.printf("\nYou can't talk to %s here.\n", command.get(1));
-        }
-        else {
+        } else {
             System.out.printf("\nThere is no %s located here.\n", command.get(1));
         }
     }
 
-    Map<String,Location> getCommand(List<String> command, Player player, Map<String, Location> currentRoomLocation) {
+    Map<String, Location> getCommand(List<String> command, Player player, Map<String, Location> currentRoomLocation) {
         Location currentLocation = currentRoomLocation.get(player.getLocation().getName());
         Map<String, Item> itemMap = JsonDataLoader.parseItemsFromFile();
         int index = 0;
@@ -124,15 +98,14 @@ class Command {
             }
             currentItemsInLocation.remove(index);
             currentLocation.setItems(currentItemsInLocation);
-        }
-        else {
+        } else {
             System.out.println("There is no " + command.get(1) + " in the location.");
         }
-        currentRoomLocation.put(player.getLocation().getName(),currentLocation);
+        currentRoomLocation.put(player.getLocation().getName(), currentLocation);
         return currentRoomLocation;
     }
 
-    Map<String,Location> dropCommand(List<String> command, Player player, Map<String, Location> currentRoomLocation) {
+    Map<String, Location> dropCommand(List<String> command, Player player, Map<String, Location> currentRoomLocation) {
         Location currentLocation = currentRoomLocation.get(player.getLocation().getName());
         Map<String, Item> itemMap = JsonDataLoader.parseItemsFromFile();
         List<String> currentItemsInLocation = currentLocation.getItems();
@@ -141,11 +114,10 @@ class Command {
             player.removeItemFromInventory(userItem.getName());
             currentItemsInLocation.add(userItem.getName());
             currentLocation.setItems(currentItemsInLocation);
-        }
-        else {
+        } else {
             System.out.println("There is no " + command.get(1) + " in your inventory to drop.");
         }
-        currentRoomLocation.put(player.getLocation().getName(),currentLocation);
+        currentRoomLocation.put(player.getLocation().getName(), currentLocation);
         return currentRoomLocation;
     }
 
@@ -162,7 +134,7 @@ class Command {
         clear();
         map.printMap();
         System.out.println("Key: ");
-        System.out.println("P = Player Location");
+        System.out.print("P = Player Location");
     }
 
     void helpCommand() {
@@ -173,5 +145,94 @@ class Command {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    Map<String, NPC> aidCommand(List<String> command, Player player) {
+        List<String> npcNames = npcMap.values().stream()
+                .filter((NPC) -> !NPC.isHasHelped())
+                .map(NPC::getName)
+                .collect(Collectors.toList());
+
+        if (npcNames.size() > 0 && npcNames.contains(command.get(1))) {
+            int index = npcNames.indexOf(command.get(1));
+            NPC aidNPC = npcMap.get(npcNames.get(index));
+
+            // Conditions to Aid the Healer
+            if (aidNPC.getName().equals("healer") && player.getInventory().contains("bandages")) {
+                aidNPC.getAidDialogue().forEach(System.out::println);
+                player.getInventory().remove("bandages");
+                List<String> npcItems = aidNPC.getItems();
+                player.getInventory().addAll(npcItems);
+                npcMap.get(aidNPC.getName()).setHasHelped(true);
+            } else if (aidNPC.getName().equals("healer")) {
+                System.out.println(aidNPC.getDialogue().get(1));
+            } else if (aidNPC.isHasHelped()) {
+                System.out.println("Thank you traveler for helping me earlier. I do not require further aid.");
+            }
+
+            // Conditions to Aid the Chief
+            if (npcNames.size() == 1 && player.getInventory().contains("talisman")) {
+                aidNPC.getAidDialogue().forEach(System.out::println);
+                player.getInventory().remove("talisman");
+                List<String> npcItems = aidNPC.getItems();
+                player.getInventory().addAll(npcItems);
+                npcMap.get(aidNPC.getName()).setHasHelped(true);
+            } else if (npcNames.size() == 1) {
+                System.out.println("Thank you traveler for your help with our village healer");
+                System.out.println("I wish I could be of more help in your journey.");
+                System.out.println("Alas, since our Talisman was stolen a few days ago.");
+                System.out.println("We have been on lookout for it as it is sacred to our people.");
+                System.out.println("If you manage to find it in your travels around the island. Please return it to us.");
+            }
+        }
+        return npcMap;
+    }
+
+    boolean activateCommand(List<String> command, Player player) {
+        boolean gameOver = false;
+
+        if (player.getLocation().getName().equals("Ship Wreck") &&
+                player.getInventory().contains("technology") &&
+                command.get(1).equals("technology")) {
+            System.out.println("You have activated the beacon and were sent home.");
+            gameOver = true;
+        } else if (player.getInventory().contains("technology") && command.get(1).equals("technology")) {
+            System.out.println("The technology starts to spin up for 2 secs but however stops. You wonder how to start this.");
+        } else {
+            System.out.println("You can not activate " + command.get(1));
+        }
+        return gameOver;
+    }
+
+    Player tieCommand(List<String> command, Player player) {
+        if (player.getInventory().contains("rope")
+                && player.getLocation().getNpc().contains("hunter")
+                && command.get(1).equals("hunter")) {
+            player.getInventory().remove("rope");
+            npcMap.get("hunter").setHasHelped(true);
+            player.getInventory().add(npcMap.get("hunter").getItems().get(0));
+            npcMap.get("hunter").getItems().remove(0);
+            npcMap.get("hunter").getAidDialogue().forEach(System.out::println);
+        }
+        return player;
+    }
+
+    void saveGameProgress(Player player) {
+        Prompter prompter = new Prompter();
+        String filename = prompter.prompt("Enter a filename to save the game progress: ");
+
+        Location currentLocation = player.getLocation();
+
+        Inventory inventory;
+        inventory = (Inventory) player.getInventory();
+        SaveGame saveGame = new SaveGame(currentLocation, player, inventory);
+
+        try {
+            saveGame.serialize(filename + ".json");
+            System.out.println("Game progress saved successfully.");
+        } catch (IOException e) {
+            System.err.println("Failed to save game progress: " + e.getMessage());
+        }
+
     }
 }

@@ -1,6 +1,8 @@
 package com.beyondstranded.app;
 
+import com.beyondstranded.Combat;
 import com.beyondstranded.Location;
+import com.beyondstranded.NPC;
 import com.beyondstranded.Player;
 import com.util.apps.Prompter;
 
@@ -14,11 +16,13 @@ public class Controller {
     private final Prompter prompter = new Prompter(new Scanner(System.in));
     private final Parser parser = new Parser();
     private final Introduction intro = new Introduction(prompter);
-    private final Command commands = new Command(prompter);
+    private final Command commands = new Command();
     private final int maxHealth = 50;
     private final MidiPlayer midiPlayer = new MidiPlayer();
+
     private Player player;
 //    private boolean introPlaying = true;
+
 
     // business methods
     public void start() {
@@ -26,11 +30,7 @@ public class Controller {
     }
 
     private void startGame() {
-//        Thread introThread = new Thread(() -> {
-//            midiPlayer.playIntro();
-//            introPlaying = false;
-//        });
-//        introThread.start();
+        Thread introThread = new Thread(midiPlayer::playIntro);
         intro.showTitlePage();
         intro.gameOption();
         intro.showCoreStory();
@@ -42,18 +42,25 @@ public class Controller {
 
     private void gameStarted() {
         boolean gameOver = false;
+        boolean hasPlayerWon = false;
         Map<String, Location> allLocation;
         allLocation = JsonDataLoader.parseLocationsFromFile();
+        Map<String, NPC> allNPCS = commands.npcMap;
         List<String> items = new ArrayList<>();
         commands.startMapCommand();
         Map<String, Location> visitedLocation = new HashMap<>();
-        player = new Player(JsonDataLoader.getLocationInfo("Awakening", allLocation),maxHealth, items, visitedLocation);
-        player.getVisitedLocations().put(player.getLocation().getName(),player.getLocation());
+        Player player = new Player(JsonDataLoader.getLocationInfo("Awakening", allLocation), maxHealth, items, visitedLocation);
+        player.getVisitedLocations().put(player.getLocation().getName(), player.getLocation());
         List<String> userInput;
 
         while (!gameOver) {
             midiPlayer.playGamePlay();
             printLocationInfo(player.getLocation().getName(), allLocation);
+            if (player.getLocation().getName().equals("Cave") && !allNPCS.get("hunter").isHasHelped()) {
+                NPC npc = allNPCS.get("hunter");
+                Combat combat = new Combat(player, npc);
+                combat.startCombat();
+            }
             System.out.println("\nPlayer Health: " + player.getHealth());
             System.out.println("\nPlayer Inventory: " + player.getInventory());
             userInput = parser.userCommand();
@@ -67,11 +74,14 @@ public class Controller {
                 case "help":
                     commands.helpCommand();
                     break;
+                case "save":
+                    commands.saveGameProgress(player);
+                    break;
                 case "look":
                     commands.lookCommand(userInput, player, allLocation);
                     break;
                 case "talk":
-                    commands.talkCommand(userInput, player, JsonDataLoader.parseNpcsFromFile());
+                    commands.talkCommand(userInput, player, allNPCS);
                     break;
                 case "map":
                     commands.showMapCommand();
@@ -82,8 +92,25 @@ public class Controller {
                 case "drop":
                     allLocation = commands.dropCommand(userInput, player, allLocation);
                     break;
+                case "teleport":
+                    player = commands.teleportCommand(userInput, player, allLocation);
+                    break;
+                case "aid":
+                    allNPCS = commands.aidCommand(userInput, player);
+                    break;
+                case "activate":
+                    hasPlayerWon = commands.activateCommand(userInput, player);
+                    gameOver = hasPlayerWon;
+                    break;
+                case "tie":
+                    player = commands.tieCommand(userInput, player);
+                    break;
             }
             prompter.prompt("\nPress Enter to Continue:","","Invalid input. Only press Enter in your keyboard.\n");
+        }
+
+        if (hasPlayerWon) {
+            intro.congratulations();
         }
     }
 

@@ -25,7 +25,6 @@ class ParserTest {
         assertFalse(parser.parseCommand(wordlist));
     }
 
-
     @Test
     void parseCommand_InvalidNoun_ReturnsFalse() {
         List<String> wordlist = Arrays.asList("take", "invalidnoun");
@@ -49,7 +48,6 @@ class ParserTest {
         String input = "";
         assertEquals(1, parser.wordList(input).size());
     }
-
 
     @Test
     void wordList_InputWithSpecialCharacters_ReturnsWordListWithoutSpecialCharacters() {
