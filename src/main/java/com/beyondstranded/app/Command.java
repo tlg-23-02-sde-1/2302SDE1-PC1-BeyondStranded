@@ -1,6 +1,7 @@
 package com.beyondstranded.app;
 
 import com.beyondstranded.*;
+import com.util.apps.Prompter;
 
 import java.io.IOException;
 import java.util.*;
@@ -214,5 +215,24 @@ class Command {
             npcMap.get("hunter").getAidDialogue().forEach(System.out::println);
         }
         return player;
+    }
+
+    void saveGameProgress(Player player) {
+        Prompter prompter = new Prompter();
+        String filename = prompter.prompt("Enter a filename to save the game progress: ");
+
+        Location currentLocation = player.getLocation();
+
+        Inventory inventory;
+        inventory = (Inventory) player.getInventory();
+        SaveGame saveGame = new SaveGame(currentLocation, player, inventory);
+
+        try {
+            saveGame.serialize(filename + ".json");
+            System.out.println("Game progress saved successfully.");
+        } catch (IOException e) {
+            System.err.println("Failed to save game progress: " + e.getMessage());
+        }
+
     }
 }
