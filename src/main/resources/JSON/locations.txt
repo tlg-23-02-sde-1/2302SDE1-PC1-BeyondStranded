@@ -10,7 +10,8 @@
       "description": "You awaken at the base of a giant tree. Your head throbs and the taste of saltwater lingers in your mouth. The jungle extends to the east and west. To the south, you see the ominous entrance of a dark cave. The smoke of the crashed helicopter billows from the north.",
       "puzzle": false,
       "items": [],
-      "npc": []
+      "npc": [],
+      "visited": true
     },
     {
       "name": "Helicopter Crash",
@@ -21,7 +22,8 @@
       "description": "The mangled wreckage of the helicopter smolders before you, the smoke rising into the sky. The path from where you came lies to the south. To the west, you see an intimidating volcano.",
       "puzzle": false,
       "items": ["radio", "bandages"],
-      "npc": []
+      "npc": [],
+      "visited": false
     },
     {
       "name": "Cave",
@@ -32,7 +34,8 @@
       "description": "The cave entrance looms before you, a yawning maw of darkness. The path leading back to the giant tree is to the north, while the roaring sound of a waterfall echoes from the south.",
       "puzzle": true,
       "items": ["torch"],
-      "npc": ["hunter"]
+      "npc": ["hunter"],
+      "visited": false
     },
     {
       "name": "Cliff",
@@ -42,7 +45,8 @@
       "description": "The cliff's edge stands dauntingly high, blocking your way. A return path winds back to the east.",
       "puzzle": false,
       "items": [],
-      "npc": []
+      "npc": [],
+      "visited": false
     },
     {
       "name": "Dense Jungle",
@@ -53,7 +57,8 @@
       "description": "The jungle closes in around you, its dense foliage making progress slow. The giant tree can be seen to the west, while a thin trail of smoke suggests a village to the south.",
       "puzzle": false,
       "items": [],
-      "npc": []
+      "npc": [],
+      "visited": false
     },
     {
       "name": "Village",
@@ -63,7 +68,8 @@
       "description": "A small tribal village appears, nestled in a clearing. The jungle from where you came is visible to the north.",
       "puzzle": false,
       "items": [],
-      "npc": ["chief", "healer"]
+      "npc": ["chief", "healer"],
+      "visited": false
     },
     {
       "name": "Waterfall",
@@ -76,7 +82,8 @@
       "description": "A majestic waterfall cascades from the cliff above, feeding a crystal clear pool. The cave entrance is to the north. A rocky shore extends to the east, while a forest clearing lies to the west.",
       "puzzle": true,
       "items": ["rope"],
-      "npc": []
+      "npc": [],
+      "visited": false
     },
     {
       "name": "Rocky Shore",
@@ -87,7 +94,8 @@
       "description": "A rugged shoreline stretches out before you, littered with shells and driftwood. The soothing sound of the waterfall can be heard to the west. The sea stretches out to the south, and you can see the outline of a shipwreck in the distance.",
       "puzzle": false,
       "items": ["shell", "driftwood"],
-      "npc": []
+      "npc": [],
+      "visited": false
     },
     {
       "name": "Forest Clearing",
@@ -96,39 +104,43 @@
       },
       "description": "You find yourself in a tranquil forest clearing. Sunlight filters through the canopy above, and a bush bursting with ripe berries catches your eye. The sound of the waterfall echoes from the east.",
       "puzzle": true,
-      "items": ["berry bush"],
-      "npc": []
-     },
-     {
-     "name": "Volcano",
-     "directions": {
-     "east": "Helicopter Crash"
-     },
-     "description": "A large volcano towers over you, its peak lost in a cloud of smoke. The helicopter crash site is visible to the east.",
-     "puzzle": true,
-     "items": [],
-     "npc": []
-     },
-     {
-     "name": "Cove",
-     "directions": {
-     "north": "Waterfall",
-     "east": "Ship Wreck"
-     },
-     "description": "A secluded cove opens up before you, the waves gently lapping at the sandy shore. The waterfall is to the north, and the shipwreck is visible in the sea to the east.",
-     "puzzle": false,
-     "items": ["bottle"],
-     "npc": []
-     },
-     {
-     "name": "Ship Wreck",
-     "directions": {
-     "north": "Rocky Shore",
-     "west": "Cove"
-     },
-     "description": "You swim out to the shipwreck, the rusted hull of the ship looming ominously. The rocky shore is to the north, and the cove is visible to the west.",
-     "puzzle": true,
-     "items": ["map", "compass"],
-     "npc": []
-     }
+      "items": ["berries"],
+      "npc": [],
+      "visited": false
+    },
+    {
+      "name": "Volcano",
+      "directions": {
+      "east": "Helicopter Crash"
+      },
+      "description": "A large volcano towers over you, its peak lost in a cloud of smoke. The helicopter crash site is visible to the east.",
+      "puzzle": true,
+      "items": [],
+      "npc": [],
+      "visited": false
+    },
+    {
+      "name": "Cove",
+      "directions": {
+      "north": "Waterfall",
+      "east": "Ship Wreck"
+      },
+      "description": "A secluded cove opens up before you, the waves gently lapping at the sandy shore. The waterfall is to the north, and the shipwreck is visible in the sea to the east.",
+      "puzzle": false,
+      "items": ["bottle"],
+      "npc": [],
+      "visited": false
+    },
+    {
+      "name": "Ship Wreck",
+      "directions": {
+      "north": "Rocky Shore",
+      "west": "Cove"
+      },
+      "description": "You swim out to the shipwreck, the rusted hull of the ship looming ominously. The rocky shore is to the north, and the cove is visible to the west.",
+      "puzzle": true,
+      "items": ["compass"],
+      "npc": [],
+      "visited": false
+    }
 ]
