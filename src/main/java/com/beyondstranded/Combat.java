@@ -18,8 +18,8 @@ public class Combat {
             int damage = player.getHealth() / 2;
             player.decreaseHealth(damage);
 
-            System.out.println("Hunter attacks you! RUN!!!");
-            System.out.println("Player's remaining health: " + player.getHealth());
+            System.out.println("\nHunter attacks you! RUN!!!");
+            //System.out.println("Player's remaining health: " + player.getHealth());
         }
     }
 }

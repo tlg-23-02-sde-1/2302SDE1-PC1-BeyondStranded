@@ -11,6 +11,7 @@
 ||           Go (Move, Advance, Travel, Walk, Run, Jog)               ||
 ||           Look (Inspect, Examine, Scan, Watch)                     ||
 ||           Talk (Chat, Speak, Gossip)                               ||
+||           Aid (Support, Assist)                                    ||
 ||                                                                    ||
 || (Use)                                                              ||
 || Single-Word                                                        ||
