@@ -27,10 +27,10 @@ public class Controller {
 
     private void startGame() {
         Thread introThread = new Thread(midiPlayer::playIntro);
-        introThread.start();
-        intro.showTitlePage();
-        intro.gameOption();
-        intro.showCoreStory();
+        //introThread.start();
+        //intro.showTitlePage();
+        //intro.gameOption();
+        //intro.showCoreStory();
         gameStarted();
         intro.gameOver();
     }
@@ -49,7 +49,7 @@ public class Controller {
         List<String> userInput;
 
         while (!gameOver) {
-            midiPlayer.playGamePlay();
+            //midiPlayer.playGamePlay();
             printLocationInfo(player.getLocation().getName(), allLocation);
             if (player.getLocation().getName().equals("Cave") && !allNPCS.get("hunter").isHasHelped()) {
                 NPC npc = allNPCS.get("hunter");
@@ -68,9 +68,6 @@ public class Controller {
                     break;
                 case "help":
                     commands.helpCommand();
-                    break;
-                case "save":
-                    commands.saveGameProgress(player);
                     break;
                 case "look":
                     commands.lookCommand(userInput, player, allLocation);
@@ -99,6 +96,9 @@ public class Controller {
                     break;
                 case "tie":
                     player = commands.tieCommand(userInput, player);
+                    break;
+                case "save":
+                    commands.saveGameProgress(player);
                     break;
             }
             prompter.prompt("\nPress Enter to Continue:","","Invalid input. Only press Enter in your keyboard.\n");

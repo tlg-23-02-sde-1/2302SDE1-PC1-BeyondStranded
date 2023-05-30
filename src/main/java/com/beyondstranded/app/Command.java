@@ -233,6 +233,5 @@ class Command {
         } catch (IOException e) {
             System.err.println("Failed to save game progress: " + e.getMessage());
         }
-
     }
 }

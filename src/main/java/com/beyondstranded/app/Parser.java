@@ -87,19 +87,20 @@ class Parser {
             switch (input) {
                 case "quit":
                     userInput.add(0, "quit");
-                    break label;
+                    break;
                 case "":
                     System.out.println("Error\n");
                     System.out.printf("\nInvalid Input. Input is empty. Input: %s", input);
                     break;
                 case "help":
                     userInput.add(0, "help");
-                    break label;
+                    break;
                 case "map":
                     userInput.add(0, "map");
-                    break label;
+                    break;
                 case "save":
                     userInput.add(0, "save");
+                    break;
                 default:
                     List<String> wl = wordList(input);
                     wl = checkCommand(wl);
