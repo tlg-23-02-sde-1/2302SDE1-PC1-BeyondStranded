@@ -49,7 +49,7 @@ public class Controller {
         List<String> userInput;
 
         while (!gameOver) {
-            //midiPlayer.playGamePlay();
+            midiPlayer.playGamePlay();
             printLocationInfo(player.getLocation().getName(), allLocation);
             if (player.getLocation().getName().equals("Cave") && !allNPCS.get("hunter").isHasHelped()) {
                 NPC npc = allNPCS.get("hunter");
