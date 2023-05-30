@@ -42,7 +42,7 @@
       "use": "Crafting"
     },
     {
-      "name": "berry bush",
+      "name": "berries",
       "description": "A bush full of ripe berries. Could be used for sustenance.",
       "location": "Forest Clearing",
       "type": "Food",
@@ -56,17 +56,36 @@
       "use": "You could use this to carry water or collect samples."
     },
     {
-      "name": "map",
-      "description": "A water-damaged map from the shipwreck. Some areas are still legible.",
-      "location": "Ship Wreck",
-      "type": "Puzzle",
-      "use": "This map could help you navigate the island."
-    },
-    {
       "name": "compass",
       "description": "A rusty old compass. Still points north, which is something.",
       "location": "Ship Wreck",
       "type": "Puzzle",
       "use": "Use this to help you navigate the island."
+    },
+    {
+      "name": "manual",
+      "description": "There appears to be a note in the front page of the manual.
+
+In the silent ship's remains,
+Where land kisses the ocean's lanes,
+To kindle the spark, and break the chains,
+Say 'Activate', and unleash the gains.",
+      "location": "Village",
+      "type": "Puzzle",
+      "use": "Guidance"
+    },
+    {
+      "name": "technology",
+      "description": "An ancient technology, known only to the tribe in the village. Its power could change the world.",
+      "location": "Village",
+      "type": "Puzzle",
+      "use": "Change the world"
+    },
+    {
+      "name": "talisman",
+      "description": "An ancient talisman stolen from the village. This relic holds immense sentimental value to the villagers.",
+      "location": "Cave",
+      "type": "Sentimental",
+      "use": "Restore faith and trust with the villagers"
     }
 ]
