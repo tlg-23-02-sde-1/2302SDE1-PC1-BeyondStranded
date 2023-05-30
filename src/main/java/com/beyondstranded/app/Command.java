@@ -142,4 +142,19 @@ class Command {
             e.printStackTrace();
         }
     }
+
+    void saveGameProgress(Player player) {
+        String filename = prompter.prompt("Enter a filename to save the game progress: ");
+
+        Location currentLocation = player.getLocation();
+        Inventory inventory = (Inventory) player.getInventory();
+        SaveGame saveGame = new SaveGame(currentLocation, player, inventory);
+
+        try {
+            saveGame.serialize(filename + ".json");
+            System.out.println("Game progress saved successfully.");
+        } catch (IOException e) {
+            System.err.println("Failed to save game progress: " + e.getMessage());
+        }
+    }
 }

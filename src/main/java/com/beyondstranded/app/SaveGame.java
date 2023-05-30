@@ -23,11 +23,15 @@ class SaveGame implements Serializable {
    }
 
    public void serialize(String filename) throws IOException {
-      Gson gson = new GsonBuilder().setPrettyPrinting().create();
-      String json = gson.toJson(this);
+      try {
+         Gson gson = new GsonBuilder().setPrettyPrinting().create();
+         String json = gson.toJson(this);
 
-      FileWriter writer = new FileWriter(filename);
-      writer.write(json);
-      writer.close();
+         FileWriter writer = new FileWriter(filename);
+         writer.write(json);
+         writer.close();
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
    }
 }

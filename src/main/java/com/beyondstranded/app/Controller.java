@@ -3,6 +3,8 @@ package com.beyondstranded.app;
 import com.beyondstranded.Location;
 import com.beyondstranded.Player;
 import com.util.apps.Prompter;
+
+import java.io.IOException;
 import java.util.*;
 
 import static com.util.apps.Console.clear;
@@ -52,6 +54,9 @@ public class Controller {
                     break;
                 case "help":
                     commands.helpCommand();
+                    break;
+                case "save":
+                    commands.saveGameProgress(player);
                     break;
                 case "look":
                     commands.lookCommand(userInput, player, allLocation);
