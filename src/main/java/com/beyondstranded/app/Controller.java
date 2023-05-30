@@ -20,9 +20,6 @@ public class Controller {
     private final int maxHealth = 50;
     private final MidiPlayer midiPlayer = new MidiPlayer();
 
-    private Player player;
-//    private boolean introPlaying = true;
-
 
     // business methods
     public void start() {
@@ -38,7 +35,6 @@ public class Controller {
         gameStarted();
         intro.gameOver();
     }
-
 
     private void gameStarted() {
         boolean gameOver = false;
@@ -111,6 +107,7 @@ public class Controller {
 
         if (hasPlayerWon) {
             intro.congratulations();
+            midiPlayer.stopMusic();
         }
     }
 
