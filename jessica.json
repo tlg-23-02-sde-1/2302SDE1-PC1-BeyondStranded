@@ -1,0 +1,16 @@
+{
+  "player": {
+    "location": {
+      "name": "Dense Jungle",
+      "directions": {
+        "west": "Awakening",
+        "south": "Village"
+      },
+      "description": "The jungle closes in around you, its dense foliage making progress slow. The giant tree can be seen to the west, while a thin trail of smoke suggests a village to the south.",
+      "items": [],
+      "npc": []
+    },
+    "health": 50,
+    "inventory": []
+  }
+}
