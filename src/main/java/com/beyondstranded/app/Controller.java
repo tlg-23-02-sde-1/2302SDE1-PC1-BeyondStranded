@@ -20,6 +20,10 @@ public class Controller {
     private final int maxHealth = 50;
     private final MidiPlayer midiPlayer = new MidiPlayer();
 
+    private Player player;
+//    private boolean introPlaying = true;
+
+
     // business methods
     public void start() {
         startGame();
@@ -27,13 +31,14 @@ public class Controller {
 
     private void startGame() {
         Thread introThread = new Thread(midiPlayer::playIntro);
-        introThread.start();
         intro.showTitlePage();
         intro.gameOption();
         intro.showCoreStory();
+//        midiPlayer.stopIntroMusic();
         gameStarted();
         intro.gameOver();
     }
+
 
     private void gameStarted() {
         boolean gameOver = false;

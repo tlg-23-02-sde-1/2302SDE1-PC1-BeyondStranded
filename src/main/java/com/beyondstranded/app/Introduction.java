@@ -20,16 +20,25 @@ class Introduction {
     private static String winCondition;
     private static String lossCondition;
     private static String gameOver;
+
+    private boolean introPlaying = true;
     private static String congratulations;
 
 
     private final Prompter prompter;
+    private MidiPlayer midiPlayer = new MidiPlayer();
 
     Introduction(Prompter prompter) {
         this.prompter = prompter;
+        this.midiPlayer = midiPlayer;
     }
 
     void showTitlePage() {
+        Thread introThread = new Thread(() -> {
+            midiPlayer.playIntro();
+            introPlaying = false;
+        });
+        introThread.start();
         showcasePrompt(banner);
     }
 
@@ -57,6 +66,7 @@ class Introduction {
         showcasePrompt(objective);
         showcasePrompt(winCondition);
         showcasePrompt(lossCondition);
+        midiPlayer.stopMusic();
     }
 
     void showcasePrompt(String prompt) {
@@ -64,6 +74,24 @@ class Introduction {
         blankLines(1);
         System.out.println(prompt);
         prompter.prompt("\n\t\t\tPress Enter to Continue:","","\t\t\tInvalid input. Only press Enter in your keyboard.\n");
+    }
+
+    private void waitForIntroThread(Thread introThread) {
+        if (introThread != null) {
+            try {
+                introThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            while (introPlaying) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     static {
