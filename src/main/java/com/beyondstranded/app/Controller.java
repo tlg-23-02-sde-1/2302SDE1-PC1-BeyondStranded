@@ -4,10 +4,7 @@ import com.beyondstranded.Location;
 import com.beyondstranded.Player;
 import com.util.apps.Prompter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 import static com.util.apps.Console.clear;
 
@@ -21,6 +18,7 @@ public class Controller {
     private final int maxHealth = 50;
     private final MidiPlayer midiPlayer = new MidiPlayer();
     private Player player;
+//    private boolean introPlaying = true;
 
     // business methods
     public void start() {
@@ -28,14 +26,15 @@ public class Controller {
     }
 
     private void startGame() {
-        Thread introThread = new Thread(() -> {
-            midiPlayer.playIntro();
-        });
-        introThread.start();
-
+//        Thread introThread = new Thread(() -> {
+//            midiPlayer.playIntro();
+//            introPlaying = false;
+//        });
+//        introThread.start();
         intro.showTitlePage();
         intro.gameOption();
         intro.showCoreStory();
+//        midiPlayer.stopIntroMusic();
         gameStarted();
         intro.gameOver();
     }
