@@ -1,4 +1,4 @@
-# Gradle project template
+#Gradle project template
 
 This template is intended as a project starter, using the Gradle project structure and build system, but providing a slightly more complete starting point than the **New Project wizard** dialog in IntelliJ IDEA provides.
 
